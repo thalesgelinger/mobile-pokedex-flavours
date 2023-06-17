@@ -1,6 +1,6 @@
 # Mobile Pokedex Flavours
 
-This repository contains the same pokedex design based on poke api but build in many diferent techs for mobile aplications.
+This repository contains the same pokedex design based on [poke api](https://pokeapi.co/) but build in many diferent techs for mobile aplications.
 
 <img width="688" alt="image" src="https://github.com/thalesgelinger/mobile-pokedex-flavours/assets/55005400/b191f133-e354-4a5c-81b7-fcf52a9f3940">
 
