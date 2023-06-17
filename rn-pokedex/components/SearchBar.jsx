@@ -1,16 +1,19 @@
+import { useState } from 'react'
 import { StyleSheet, TextInput, View } from "react-native"
 import Search from '../images/icons/search.svg'
-import { colors, elevation, typography } from "../theme"
+import { colors, typography } from "../theme"
 
 
-export const SearchBar = () => {
+export const SearchBar = ({ searchTerm, onChangeSearchTerm }) => {
     return <View style={styles.container}>
         <View style={styles.iconContainer}>
             <Search width={20} height={20} color={colors.identity.primary} />
         </View>
         <TextInput
             style={styles.input}
-            placeholder="Search" 
+            placeholder="Search"
+            value={searchTerm}
+            onChangeText={onChangeSearchTerm}
         />
     </View>
 }

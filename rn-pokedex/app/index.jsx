@@ -1,39 +1,39 @@
 import { useEffect, useState } from 'react'
-import { Link } from "expo-router";
 import { Text, View, StyleSheet, SafeAreaView, FlatList } from "react-native";
-import { colors, typography, elevation } from "../theme";
-import { TypePill, SearchBar, SortButton, Card } from "../components";
+import { colors, typography } from "../theme";
+import { SearchBar, SortButton, Card } from "../components";
 import Pokeball from "../images/icons/pokeball.svg"
+import { api } from '../services/api'
 
 const BASE_URL = "https://pokeapi.co/api/v2/"
 
 const SearchPage = () => {
 
     const [data, setData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('')
+
+    const filteredData = [...data].filter((pokemon) => {
+        return pokemon.name.includes(searchTerm.toLowerCase())
+            || pokemon.number == searchTerm
+    })
 
     useEffect(() => {
         fetchPokemons();
     }, [])
 
-    const get = async (endpoint) => {
-        const raw = await fetch(endpoint)
-        const response = await raw.json();
-        return response;
-    }
 
     const fetchPokemons = async () => {
-        const { results } = await get(BASE_URL + "pokemon?limit=12&offset=0");
-        console.log({ results })
+        const { results } = await api.get(BASE_URL + `pokemon?limit=${data.length + 21}&offset=${data.length}`);
         const pokedata = await Promise.all(results.map(async ({ name, url }, index) => {
-            const details = await get(url);
+            const details = await api.get(url);
             return {
                 name,
-                number: index + 1,
+                number: data.length + index + 1,
                 img: details.sprites.front_default
             }
         }))
 
-        setData(pokedata)
+        setData((prevData) => [prevData, pokedata].flat())
     }
 
     return <SafeAreaView style={styles.container}>
@@ -45,7 +45,7 @@ const SearchPage = () => {
 
             <View style={styles.searchHeader}>
                 <View style={styles.searchBar}>
-                    <SearchBar />
+                    <SearchBar searchTerm={searchTerm} onChangeSearchTerm={setSearchTerm} />
                 </View>
                 <SortButton />
             </View>
@@ -55,10 +55,16 @@ const SearchPage = () => {
         <FlatList
             style={styles.listContainer}
             showsVerticalScrollIndicator={false}
-            data={data}
-            renderItem={({ item }) => <Card img={item.img} name={ item.name} number={ item.number}/>}
-            keyExtractor={(item) => item.toString()}
+            data={filteredData}
+            renderItem={({ item }) => <Card
+                img={item.img}
+                name={item.name}
+                number={item.number}
+            />}
+            keyExtractor={(item) => item.name}
             numColumns={3}
+            onEndReached={fetchPokemons}
+            onEndReachedThreshold={3}
         />
     </SafeAreaView>
 }

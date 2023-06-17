@@ -1,20 +1,28 @@
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native'
 import { colors, elevation, typography } from '../theme'
+import { Link } from 'expo-router'
 
-export const Card = ({img, name, number}) => {
+export const Card = ({ img, name, number }) => {
     return <View style={styles.container}>
-        <View style={styles.card}>
-            <Text style={styles.number}>#{number}</Text>
-            <Image
-                source={{
-                    uri: img
-                }}
-                style={styles.image}
-            />
-            <View style={styles.background}>
-                <Text style={styles.name}>{name}</Text>
+        <Link href={{
+            pathname: "/details/[id]",
+            params: {
+                id: number
+            }
+        }}>
+            <View style={styles.card}>
+                <Text style={styles.number}>#{number}</Text>
+                <Image
+                    source={{
+                        uri: img
+                    }}
+                    style={styles.image}
+                />
+                <View style={styles.background}>
+                    <Text style={styles.name}>{name}</Text>
+                </View>
             </View>
-        </View>
+        </Link>
     </View>
 }
 
@@ -62,8 +70,8 @@ const styles = StyleSheet.create({
         right: 0
     },
     image: {
-        width: 150,
-        height: 150,
+        width: "100%",
+        height: "100%",
         zIndex: 10,
     }
 })
