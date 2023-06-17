@@ -4,6 +4,7 @@ import { colors, typography } from "../theme";
 import { SearchBar, SortButton, Card } from "../components";
 import Pokeball from "../images/icons/pokeball.svg"
 import { api } from '../services/api'
+import { StatusBar } from 'expo-status-bar';
 
 const BASE_URL = "https://pokeapi.co/api/v2/"
 
@@ -37,6 +38,7 @@ const SearchPage = () => {
     }
 
     return <SafeAreaView style={styles.container}>
+        <StatusBar style="light" />
         <View style={styles.header}>
             <View style={styles.headerTitle}>
                 <Pokeball width={24} height={24} color={colors.grayscale.white} />
@@ -74,7 +76,8 @@ export default SearchPage;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.identity.primary
+        backgroundColor: colors.identity.primary,
+        paddingTop: 20
     },
     header: {
         paddingHorizontal: 20,
