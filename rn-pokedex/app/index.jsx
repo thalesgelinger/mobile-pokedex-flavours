@@ -49,7 +49,6 @@ const SearchPage = () => {
                 <View style={styles.searchBar}>
                     <SearchBar searchTerm={searchTerm} onChangeSearchTerm={setSearchTerm} />
                 </View>
-                <SortButton />
             </View>
 
         </View>
@@ -91,6 +90,7 @@ const styles = StyleSheet.create({
     searchBar: {
         flex: 1,
         marginRight: 10,
+        height: 32
     },
     title: {
         marginLeft: 20,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 4,
         marginVertical: 4,
         backgroundColor: colors.grayscale.white,
-        borderRadius: 16
+        borderRadius: 16,
     },
 })
 
