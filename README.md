@@ -6,7 +6,7 @@ This repository contains the same pokedex design based on poke api but build in 
 
 
 The techs that must be used at first moment are:
- - React Native
+ - React Native (wip)
  - Flutter
  - IOS - with Objective-C
  - IOS - with Swift
