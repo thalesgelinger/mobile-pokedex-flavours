@@ -13,7 +13,7 @@ const SearchPage = () => {
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('')
 
-    const filteredData = [...data].filter((pokemon) => {
+    const filteredData = data.filter((pokemon) => {
         return pokemon.name.includes(searchTerm.toLowerCase())
             || pokemon.number == searchTerm
     })
@@ -49,7 +49,6 @@ const SearchPage = () => {
                 <View style={styles.searchBar}>
                     <SearchBar searchTerm={searchTerm} onChangeSearchTerm={setSearchTerm} />
                 </View>
-                <SortButton />
             </View>
 
         </View>
@@ -63,7 +62,7 @@ const SearchPage = () => {
                 name={item.name}
                 number={item.number}
             />}
-            keyExtractor={(item) => item.name}
+            keyExtractor={(item, i) => i.toString()}
             numColumns={3}
             onEndReached={fetchPokemons}
             onEndReachedThreshold={3}
@@ -91,6 +90,7 @@ const styles = StyleSheet.create({
     searchBar: {
         flex: 1,
         marginRight: 10,
+        height: 32
     },
     title: {
         marginLeft: 20,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 4,
         marginVertical: 4,
         backgroundColor: colors.grayscale.white,
-        borderRadius: 16
+        borderRadius: 16,
     },
 })
 

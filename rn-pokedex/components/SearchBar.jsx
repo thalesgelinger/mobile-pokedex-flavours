@@ -6,6 +6,7 @@ import { colors, typography } from "../theme"
 
 export const SearchBar = ({ searchTerm, onChangeSearchTerm }) => {
     return <View style={styles.container}>
+
         <View style={styles.iconContainer}>
             <Search width={20} height={20} color={colors.identity.primary} />
         </View>
