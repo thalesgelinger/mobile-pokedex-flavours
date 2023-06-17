@@ -13,7 +13,7 @@ const SearchPage = () => {
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('')
 
-    const filteredData = [...data].filter((pokemon) => {
+    const filteredData = data.filter((pokemon) => {
         return pokemon.name.includes(searchTerm.toLowerCase())
             || pokemon.number == searchTerm
     })
@@ -62,7 +62,7 @@ const SearchPage = () => {
                 name={item.name}
                 number={item.number}
             />}
-            keyExtractor={(item) => item.name}
+            keyExtractor={(item, i) => i.toString()}
             numColumns={3}
             onEndReached={fetchPokemons}
             onEndReachedThreshold={3}

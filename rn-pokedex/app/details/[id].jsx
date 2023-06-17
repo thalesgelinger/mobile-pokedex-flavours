@@ -54,7 +54,8 @@ const Details = () => {
                     ...acc,
                     [stat.name]: base_stat
                 }
-            }, {})
+            }, {}),
+            description: (await api.get(species.url)).flavor_text_entries[0].flavor_text
         }
 
         setDetails(details)
@@ -99,7 +100,7 @@ const Details = () => {
         <View style={styles.description}>
             <View style={styles.types}>
                 {details.types.map((type) =>
-                    <TypePill type={type} />
+                    <TypePill key={type} type={type} />
                 )}
             </View>
             <Text style={styles.about}>
@@ -127,7 +128,7 @@ const Details = () => {
                 <View style={styles.block}>
                     <View style={styles.moves}>
                         {details.abilities.map(ability =>
-                            <Text style={{ color: colors.grayscale.dark }}>{ability}</Text>
+                            <Text key={ability} style={{ color: colors.grayscale.dark }}>{ability}</Text>
                         )}
                     </View>
                     <Text style={styles.titleChar}>Moves</Text>
