@@ -71,9 +71,13 @@ class Details extends StatelessWidget {
                       color: AppColors.grayscale['white'],
                       borderRadius: BorderRadius.circular(8),
                     ),
+                    width: double.infinity,
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          left: 20, right: 20, bottom: 20),
+                        left: 20,
+                        right: 20,
+                        bottom: 20,
+                      ),
                       child: Column(
                         children: [
                           const SizedBox(
@@ -157,55 +161,106 @@ class Details extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 16),
                             child: Text(
                               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc iaculis eros vitae tellus condimentum maximus sit amet in eros.",
                             ),
                           ),
-                          Text("Base Status"),
-                          Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text("HP"),
-                                  Text("ATK"),
-                                  Text("DEF"),
-                                  Text("SATK"),
-                                  Text("SDEF"),
-                                  Text("SPD"),
-                                ],
-                              ),
-                              Container(
-                                //TODO: MAKE THIS BETTER
-                                width: 1,
-                                height: 100,
-                                color: AppColors.grayscale['medium'],
-                              ),
-                              Column(
-                                children: [
-                                  Text("999"),
-                                  Text("999"),
-                                  Text("999"),
-                                  Text("999"),
-                                  Text("999"),
-                                  Text("999"),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.all(10),
-                                    child: LinearProgressIndicator(
-                                      backgroundColor:
-                                          AppColors.pokeType['bug'],
-                                      value: 0.5,
-                                    ),
+                          const Text("Base Status"),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  color: AppColors.grayscale['medium'],
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        color: AppColors.grayscale['white'],
+                                        child: const Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Text("HP"),
+                                            Text("ATK"),
+                                            Text("DEF"),
+                                            Text("SATK"),
+                                            Text("SDEF"),
+                                            Text("SPD"),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 1,
+                                      ),
+                                      Container(
+                                        color: AppColors.grayscale['white'],
+                                        child: const Column(
+                                          children: [
+                                            Text("999"),
+                                            Text("999"),
+                                            Text("999"),
+                                            Text("999"),
+                                            Text("999"),
+                                            Text("999"),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            LinearProgressIndicator(
+                                              value: 0.5,
+                                              backgroundColor: AppColors
+                                                  .grayscale['light'],
+                                              color:
+                                                  AppColors.pokeType['bug'],
+                                            ),
+                                            LinearProgressIndicator(
+                                              value: 0.5,
+                                              backgroundColor: AppColors
+                                                  .grayscale['light'],
+                                              color:
+                                                  AppColors.pokeType['bug'],
+                                            ),
+                                            LinearProgressIndicator(
+                                              value: 0.5,
+                                              backgroundColor: AppColors
+                                                  .grayscale['light'],
+                                              color:
+                                                  AppColors.pokeType['bug'],
+                                            ),
+                                            LinearProgressIndicator(
+                                              value: 0.5,
+                                              backgroundColor: AppColors
+                                                  .grayscale['light'],
+                                              color:
+                                                  AppColors.pokeType['bug'],
+                                            ),
+                                            LinearProgressIndicator(
+                                              value: 0.5,
+                                              backgroundColor: AppColors
+                                                  .grayscale['light'],
+                                              color:
+                                                  AppColors.pokeType['bug'],
+                                            ),
+                                            LinearProgressIndicator(
+                                              value: 0.5,
+                                              backgroundColor: AppColors
+                                                  .grayscale['light'],
+                                              color:
+                                                  AppColors.pokeType['bug'],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
