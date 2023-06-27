@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/models/pokemon.dart';
 import 'package:flutter_pokedex/themes/colors.dart';
 
 class PokeCard extends StatelessWidget {
-  const PokeCard({
-    super.key,
-  });
+  final Pokemon pokedata;
+
+  const PokeCard({super.key, required this.pokedata});
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +30,13 @@ class PokeCard extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Align(
                 alignment: Alignment.topRight,
-                child: Text("#999"),
+                child: Text(
+                  '#' + pokedata.number.toString(),
+                ),
               ),
             ),
             Align(
@@ -51,18 +54,18 @@ class PokeCard extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Image.network(
-                  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+                  pokedata.img,
                   width: 200,
                   height: 200,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 4),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: Text("Pokémon Name"),
+                child: Text(pokedata.name),
               ),
             ),
           ],

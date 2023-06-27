@@ -1,12 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/models/pokemon.dart';
+import 'package:flutter_pokedex/services/api.dart';
 import 'package:flutter_pokedex/themes/typography.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_pokedex/themes/colors.dart';
 import 'package:flutter_pokedex/themes/icons.dart';
 import 'package:flutter_pokedex/components/pokecard.dart';
+import 'package:collection/collection.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
+
+  @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  List<Pokemon> pokemons = [];
+
+  @override
+  void initState() {
+    fetchPokemons();
+    super.initState();
+  }
+
+  fetchPokemons() async {
+    final result =
+        await Api.get("https://pokeapi.co/api/v2/pokemon?limit=50&offset=0");
+    final List<dynamic> results = result['results'];
+    final List<Pokemon> pokemonsMapped = await Future.wait(
+      results.mapIndexed(
+        (i, pokemon) async {
+          final details = await Api.get(pokemon['url']);
+
+          return Pokemon(
+            name: pokemon['name'],
+            number: i + 1,
+            img: details['sprites']['front_default'],
+          );
+        },
+      ),
+    );
+
+    setState(() {
+      pokemons = pokemonsMapped;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,9 +137,11 @@ class SearchPage extends StatelessWidget {
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 8,
                     ),
-                    itemCount: 10,
+                    itemCount: pokemons.length,
                     itemBuilder: (BuildContext ctx, index) {
-                      return const PokeCard();
+                      return PokeCard(
+                        pokedata: pokemons[index],
+                      );
                     },
                   ),
                 ),
@@ -112,4 +153,3 @@ class SearchPage extends StatelessWidget {
     );
   }
 }
-
