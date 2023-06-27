@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/colors.dart';
+import 'package:flutter_pokedex/themes/colors.dart';
 
 class PokeCard extends StatelessWidget {
   const PokeCard({

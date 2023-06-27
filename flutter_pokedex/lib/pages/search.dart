@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/themes/typography.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_pokedex/themes/colors.dart';
 import 'package:flutter_pokedex/themes/icons.dart';
@@ -30,9 +31,8 @@ class SearchPage extends StatelessWidget {
             Text(
               "Pokédex",
               textAlign: TextAlign.left,
-              style: TextStyle(
+              style: AppTypography.headline.copyWith(
                 color: AppColors.grayscale["white"],
-                fontWeight: FontWeight.w700,
               ),
             ),
           ],
