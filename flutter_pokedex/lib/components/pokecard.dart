@@ -11,7 +11,11 @@ class PokeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/details');
+        Navigator.pushNamed(
+          context,
+          '/details',
+          arguments: pokedata.number,
+        );
       },
       child: Container(
         height: 108.0,
@@ -35,7 +39,7 @@ class PokeCard extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topRight,
                 child: Text(
-                  '#' + pokedata.number.toString(),
+                  "#${pokedata.number}",
                 ),
               ),
             ),

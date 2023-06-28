@@ -3,18 +3,63 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/components/pill.dart';
 import 'package:flutter_pokedex/components/status.dart';
+import 'package:flutter_pokedex/models/pokemondetails.dart';
+import 'package:flutter_pokedex/services/api.dart';
 import 'package:flutter_pokedex/themes/colors.dart';
 import 'package:flutter_pokedex/themes/icons.dart';
 import 'package:flutter_pokedex/themes/typography.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class Details extends StatelessWidget {
+class Details extends StatefulWidget {
   const Details({super.key});
 
   @override
+  State<Details> createState() => _DetailsState();
+}
+
+class _DetailsState extends State<Details> {
+  late PokemonDetails details;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    fetchDetails();
+  }
+
+  fetchDetails() async {
+    final pokeId = ModalRoute.of(context)!.settings.arguments;
+
+    final pokemonDetailsJson =
+        await Api.get("https://pokeapi.co/api/v2/pokemon/${pokeId.toString()}");
+
+    final pokemonDetails = PokemonDetails(
+      name: pokemonDetailsJson['species']['name'],
+      number: pokeId as int,
+      img: pokemonDetailsJson["sprites"]["front_default"],
+      weight: pokemonDetailsJson['weight'],
+      height: pokemonDetailsJson['height'],
+      abilities: pokemonDetailsJson['abilities']
+          .map((d) => d["ability"]["name"])
+          .toList(),
+      types: pokemonDetailsJson['types'].map((d) => d["type"]["name"]).toList(),
+      stats: pokemonDetailsJson["stats"].fold(
+        {},
+        (acc, el) => {...acc, el["stat"]["name"]: el["base_stat"]},
+      ),
+    );
+
+    setState(() {
+      details = pokemonDetails;
+    });
+  }
+
+  toPercentage(int value) {
+    return value / 255;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final types = ["grass", "bug"];
-    final mainColor = AppColors.pokeType[types[0]];
+    final mainColor = AppColors.pokeType[details.types[0]];
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -41,14 +86,14 @@ class Details extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                "Pokémon Name",
+                details.name,
                 style: AppTypography.headline.copyWith(
                   color: AppColors.grayscale['white'],
                 ),
               ),
             ),
             Text(
-              "#999",
+              "#${details.number}",
               style: AppTypography.subtitle2.copyWith(
                 color: AppColors.grayscale['white'],
               ),
@@ -100,15 +145,16 @@ class Details extends StatelessWidget {
                           const SizedBox(
                             height: 60,
                           ),
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Wrap(
                                 spacing: 16,
-                                children: [
-                                  Pill(type: 'grass'),
-                                  Pill(type: "bug"),
-                                ],
+                                children: details.types
+                                    .map(
+                                      (type) => Pill(type: type),
+                                    )
+                                    .toList(),
                               ),
                             ],
                           ),
@@ -140,7 +186,9 @@ class Details extends StatelessWidget {
                                             ),
                                             fit: BoxFit.fitHeight,
                                           ),
-                                          const Text("9,9kg"),
+                                          Text(
+                                            "${details.weight.toString()}kg",
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -176,7 +224,7 @@ class Details extends StatelessWidget {
                                               fit: BoxFit.fitHeight,
                                             ),
                                           ),
-                                          const Text("9,9kg"),
+                                          Text("${details.height.toString()}m"),
                                         ],
                                       ),
                                     ),
@@ -198,20 +246,15 @@ class Details extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(
-                                            "Ability 1",
-                                            style: AppTypography.body3
-                                                .copyWith(height: 0),
-                                          ),
-                                          Text(
-                                            "Ability 2",
-                                            style: AppTypography.body3
-                                                .copyWith(height: 0),
-                                          ),
-                                        ],
-                                      ),
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: details.abilities
+                                              .map((ability) => Text(
+                                                    ability,
+                                                    style: AppTypography.body3
+                                                        .copyWith(height: 0),
+                                                  ))
+                                              .toList()),
                                     ),
                                     Text(
                                       "Moves",
@@ -230,6 +273,7 @@ class Details extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(vertical: 16),
                                 child: Text(
                                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc iaculis eros vitae tellus condimentum maximus sit amet in eros.",
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
                             ),
@@ -301,16 +345,32 @@ class Details extends StatelessWidget {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),
                                         color: AppColors.grayscale['white'],
-                                        child: const Column(
+                                        child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
-                                            Text("999"),
-                                            Text("999"),
-                                            Text("999"),
-                                            Text("999"),
-                                            Text("999"),
-                                            Text("999"),
+                                            Text(
+                                              details.stats['hp'].toString(),
+                                            ),
+                                            Text(
+                                              details.stats['attack']
+                                                  .toString(),
+                                            ),
+                                            Text(
+                                              details.stats['defense']
+                                                  .toString(),
+                                            ),
+                                            Text(
+                                              details.stats['special-attack']
+                                                  .toString(),
+                                            ),
+                                            Text(
+                                              details.stats['special-defense']
+                                                  .toString(),
+                                            ),
+                                            Text(
+                                              details.stats['speed'].toString(),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -322,28 +382,42 @@ class Details extends StatelessWidget {
                                                 MainAxisAlignment.spaceAround,
                                             children: [
                                               Status(
-                                                value: 0.5,
-                                                type: types[0],
+                                                value: toPercentage(
+                                                  details.stats['hp'],
+                                                ),
+                                                type: details.types[0],
                                               ),
                                               Status(
-                                                value: 0.5,
-                                                type: types[0],
+                                                value: toPercentage(
+                                                  details.stats['attack'],
+                                                ),
+                                                type: details.types[0],
                                               ),
                                               Status(
-                                                value: 0.5,
-                                                type: types[0],
+                                                value: toPercentage(
+                                                  details.stats['defense'],
+                                                ),
+                                                type: details.types[0],
                                               ),
                                               Status(
-                                                value: 0.5,
-                                                type: types[0],
+                                                value: toPercentage(
+                                                  details
+                                                      .stats['special-attack'],
+                                                ),
+                                                type: details.types[0],
                                               ),
                                               Status(
-                                                value: 0.5,
-                                                type: types[0],
+                                                value: toPercentage(
+                                                  details
+                                                      .stats['special-defense'],
+                                                ),
+                                                type: details.types[0],
                                               ),
                                               Status(
-                                                value: 0.5,
-                                                type: types[0],
+                                                value: toPercentage(
+                                                  details.stats['speed'],
+                                                ),
+                                                type: details.types[0],
                                               ),
                                             ],
                                           ),
@@ -369,6 +443,11 @@ class Details extends StatelessWidget {
               child: Row(
                 children: [
                   InkWell(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, "/details",
+                          arguments:
+                              details.number - 1 < 0 ? 0 : details.number - 1);
+                    },
                     child: SvgPicture.asset(
                       AppIcons.chevronLeft,
                       colorFilter: ColorFilter.mode(
@@ -382,13 +461,17 @@ class Details extends StatelessWidget {
                   ),
                   Expanded(
                     child: Image.network(
-                      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+                      details.img,
                       width: 200,
                       height: 200,
                       fit: BoxFit.cover,
                     ),
                   ),
                   InkWell(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, "/details",
+                          arguments: details.number + 1);
+                    },
                     child: SvgPicture.asset(
                       AppIcons.chevronRight,
                       colorFilter: ColorFilter.mode(
