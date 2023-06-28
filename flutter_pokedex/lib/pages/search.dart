@@ -17,6 +17,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   List<Pokemon> pokemons = [];
+  List<Pokemon> pokemonsFiltered = [];
 
   @override
   void initState() {
@@ -44,6 +45,14 @@ class _SearchPageState extends State<SearchPage> {
 
     setState(() {
       pokemons = pokemonsMapped;
+      pokemonsFiltered = pokemonsMapped;
+    });
+  }
+
+  handleFilter(String searchTerm) {
+    setState(() {
+      pokemonsFiltered = pokemons.where((pokemon)=> pokemon.name.contains(searchTerm))
+          .toList();
     });
   }
 
@@ -84,6 +93,7 @@ class _SearchPageState extends State<SearchPage> {
             child: SizedBox(
               height: 32,
               child: TextField(
+                onChanged: handleFilter,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -137,10 +147,10 @@ class _SearchPageState extends State<SearchPage> {
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 8,
                     ),
-                    itemCount: pokemons.length,
+                    itemCount: pokemonsFiltered.length,
                     itemBuilder: (BuildContext ctx, index) {
                       return PokeCard(
-                        pokedata: pokemons[index],
+                        pokedata: pokemonsFiltered[index],
                       );
                     },
                   ),

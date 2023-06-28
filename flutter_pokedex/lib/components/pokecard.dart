@@ -22,8 +22,8 @@ class PokeCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: AppColors.grayscale['medium'],
-              spreadRadius: 2,
-              blurRadius: 5,
+              spreadRadius: 1,
+              blurRadius: 3,
               offset: const Offset(0, 3),
             ),
           ],
