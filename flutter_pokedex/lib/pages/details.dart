@@ -18,7 +18,7 @@ class Details extends StatefulWidget {
 }
 
 class _DetailsState extends State<Details> {
-  late PokemonDetails details;
+  PokemonDetails? detailsFetched;
 
   @override
   void didChangeDependencies() {
@@ -49,7 +49,7 @@ class _DetailsState extends State<Details> {
     );
 
     setState(() {
-      details = pokemonDetails;
+      detailsFetched = pokemonDetails;
     });
   }
 
@@ -59,6 +59,12 @@ class _DetailsState extends State<Details> {
 
   @override
   Widget build(BuildContext context) {
+    if (detailsFetched == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    PokemonDetails details = detailsFetched!;
+
     final mainColor = AppColors.pokeType[details.types[0]];
 
     return Scaffold(
@@ -169,7 +175,8 @@ class _DetailsState extends State<Details> {
                           SizedBox(
                             height: 48,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceAround,
                               children: [
                                 Column(
                                   children: [
@@ -224,7 +231,8 @@ class _DetailsState extends State<Details> {
                                               fit: BoxFit.fitHeight,
                                             ),
                                           ),
-                                          Text("${details.height.toString()}m"),
+                                          Text(
+                                              "${details.height.toString()}m"),
                                         ],
                                       ),
                                     ),
@@ -259,7 +267,8 @@ class _DetailsState extends State<Details> {
                                     Text(
                                       "Moves",
                                       style: AppTypography.caption.copyWith(
-                                          color: AppColors.grayscale['medium'],
+                                          color:
+                                              AppColors.grayscale['medium'],
                                           height: 0),
                                     ),
                                   ],
@@ -369,7 +378,8 @@ class _DetailsState extends State<Details> {
                                                   .toString(),
                                             ),
                                             Text(
-                                              details.stats['speed'].toString(),
+                                              details.stats['speed']
+                                                  .toString(),
                                             ),
                                           ],
                                         ),
@@ -401,15 +411,15 @@ class _DetailsState extends State<Details> {
                                               ),
                                               Status(
                                                 value: toPercentage(
-                                                  details
-                                                      .stats['special-attack'],
+                                                  details.stats[
+                                                      'special-attack'],
                                                 ),
                                                 type: details.types[0],
                                               ),
                                               Status(
                                                 value: toPercentage(
-                                                  details
-                                                      .stats['special-defense'],
+                                                  details.stats[
+                                                      'special-defense'],
                                                 ),
                                                 type: details.types[0],
                                               ),
@@ -445,19 +455,22 @@ class _DetailsState extends State<Details> {
                   InkWell(
                     onTap: () {
                       Navigator.pushReplacementNamed(context, "/details",
-                          arguments:
-                              details.number - 1 < 0 ? 0 : details.number - 1);
+                          arguments: details.number - 1);
                     },
-                    child: SvgPicture.asset(
-                      AppIcons.chevronLeft,
-                      colorFilter: ColorFilter.mode(
-                        AppColors.grayscale["white"],
-                        BlendMode.srcIn,
-                      ),
-                      height: 24,
-                      width: 24,
-                      fit: BoxFit.fitHeight,
-                    ),
+                    child: details.number - 1 > 0
+                        ? SvgPicture.asset(
+                            AppIcons.chevronLeft,
+                            colorFilter: ColorFilter.mode(
+                              AppColors.grayscale["white"],
+                              BlendMode.srcIn,
+                            ),
+                            height: 24,
+                            width: 24,
+                            fit: BoxFit.fitHeight,
+                          )
+                        : const SizedBox(
+                            width: 24,
+                          ),
                   ),
                   Expanded(
                     child: Image.network(

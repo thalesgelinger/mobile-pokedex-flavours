@@ -19,15 +19,32 @@ class _SearchPageState extends State<SearchPage> {
   List<Pokemon> pokemons = [];
   List<Pokemon> pokemonsFiltered = [];
 
+  late ScrollController controller;
+
   @override
   void initState() {
     fetchPokemons();
     super.initState();
+    controller = ScrollController();
+
+    controller.addListener(() {
+      if (controller.hasClients) {
+        if (controller.position.maxScrollExtent == controller.offset) {
+          fetchPokemons();
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   fetchPokemons() async {
-    final result =
-        await Api.get("https://pokeapi.co/api/v2/pokemon?limit=50&offset=0");
+    final result = await Api.get(
+        "https://pokeapi.co/api/v2/pokemon?limit=${pokemons.length + 21}&offset=${pokemons.length}");
     final List<dynamic> results = result['results'];
     final List<Pokemon> pokemonsMapped = await Future.wait(
       results.mapIndexed(
@@ -36,7 +53,7 @@ class _SearchPageState extends State<SearchPage> {
 
           return Pokemon(
             name: pokemon['name'],
-            number: i + 1,
+            number: pokemons.length + i + 1,
             img: details['sprites']['front_default'],
           );
         },
@@ -44,14 +61,15 @@ class _SearchPageState extends State<SearchPage> {
     );
 
     setState(() {
-      pokemons = pokemonsMapped;
-      pokemonsFiltered = pokemonsMapped;
+      pokemons = [...pokemons, ...pokemonsMapped];
+      pokemonsFiltered = [...pokemons, ...pokemonsMapped];
     });
   }
 
   handleFilter(String searchTerm) {
     setState(() {
-      pokemonsFiltered = pokemons.where((pokemon)=> pokemon.name.contains(searchTerm))
+      pokemonsFiltered = pokemons
+          .where((pokemon) => pokemon.name.contains(searchTerm))
           .toList();
     });
   }
@@ -141,6 +159,7 @@ class _SearchPageState extends State<SearchPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GridView.builder(
+                    controller: controller,
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 150,
