@@ -175,8 +175,7 @@ class _DetailsState extends State<Details> {
                           SizedBox(
                             height: 48,
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Column(
                                   children: [
@@ -231,8 +230,7 @@ class _DetailsState extends State<Details> {
                                               fit: BoxFit.fitHeight,
                                             ),
                                           ),
-                                          Text(
-                                              "${details.height.toString()}m"),
+                                          Text("${details.height.toString()}m"),
                                         ],
                                       ),
                                     ),
@@ -267,8 +265,7 @@ class _DetailsState extends State<Details> {
                                     Text(
                                       "Moves",
                                       style: AppTypography.caption.copyWith(
-                                          color:
-                                              AppColors.grayscale['medium'],
+                                          color: AppColors.grayscale['medium'],
                                           height: 0),
                                     ),
                                   ],
@@ -378,8 +375,7 @@ class _DetailsState extends State<Details> {
                                                   .toString(),
                                             ),
                                             Text(
-                                              details.stats['speed']
-                                                  .toString(),
+                                              details.stats['speed'].toString(),
                                             ),
                                           ],
                                         ),
@@ -411,15 +407,15 @@ class _DetailsState extends State<Details> {
                                               ),
                                               Status(
                                                 value: toPercentage(
-                                                  details.stats[
-                                                      'special-attack'],
+                                                  details
+                                                      .stats['special-attack'],
                                                 ),
                                                 type: details.types[0],
                                               ),
                                               Status(
                                                 value: toPercentage(
-                                                  details.stats[
-                                                      'special-defense'],
+                                                  details
+                                                      .stats['special-defense'],
                                                 ),
                                                 type: details.types[0],
                                               ),
