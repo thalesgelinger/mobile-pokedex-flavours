@@ -31,7 +31,7 @@
   myButton.frame = CGRectMake(100, 500, 200, 50);
   [myButton setTitle:@"Click Me" forState:UIControlStateNormal];
   [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  [myButton setBackgroundColor:[Colors primary]];
+  [myButton setBackgroundColor:[[Colors grayscale] objectForKey:@"medium"]];
   [myButton addTarget:self
                 action:@selector(buttonClicked:)
       forControlEvents:UIControlEventTouchUpInside];
