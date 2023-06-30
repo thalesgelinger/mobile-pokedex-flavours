@@ -14,3 +14,12 @@ Notes about development:
 - and then run this command `xcodebuild clean build -project IosPokedexObjC.xcodeproj -scheme IosPokedexObjC -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max' COMPILER_INDEX_STORE_ENABLE=NO | xcpretty -r json-compilation-database --output compile_commands.json
 `
 - then i created my .json file and the lsp worked as expected, now i'm read to really learn obj-c
+
+
+- everty time i add a new file (.m and .h), i need to also add this file to compile sources
+- it can be done with xcode, but i did the hard way, for making it by scratch i have to 
+- create an uuid for the file and add the file, clean and build again
+- but i added a script `add_file.rb` that receive the new file path
+- for use it its just `ruby add_file.rb ./Project/NewFile.m`
+- then just run `xcode clean`
+- and then the buid script, and everhting should work

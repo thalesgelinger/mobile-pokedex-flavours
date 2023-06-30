@@ -17,6 +17,7 @@
 		8239F5BD2A4CCD720016F7E1 /* IosPokedexObjCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8239F5BC2A4CCD720016F7E1 /* IosPokedexObjCTests.m */; };
 		8239F5C72A4CCD720016F7E1 /* IosPokedexObjCUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8239F5C62A4CCD720016F7E1 /* IosPokedexObjCUITests.m */; };
 		8239F5C92A4CCD720016F7E1 /* IosPokedexObjCUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8239F5C82A4CCD720016F7E1 /* IosPokedexObjCUITestsLaunchTests.m */; };
+		CA3BA9DAE8CB72F0DB0C619E /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EFDA111213462C396830B5D /* Colors.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4EFDA111213462C396830B5D /* Colors.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Colors.m; path = ./IosPokedexObjC/Colors.m; sourceTree = "<group>"; };
 		8239F59D2A4CCD700016F7E1 /* IosPokedexObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IosPokedexObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8239F5A02A4CCD700016F7E1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8239F5A12A4CCD700016F7E1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				8239F5BB2A4CCD720016F7E1 /* IosPokedexObjCTests */,
 				8239F5C52A4CCD720016F7E1 /* IosPokedexObjCUITests */,
 				8239F59E2A4CCD700016F7E1 /* Products */,
+				4EFDA111213462C396830B5D /* Colors.m */,
 			);
 			sourceTree = "<group>";
 		};
@@ -270,6 +273,7 @@
 				8239F5A22A4CCD700016F7E1 /* AppDelegate.m in Sources */,
 				8239F5B32A4CCD710016F7E1 /* main.m in Sources */,
 				8239F5A52A4CCD700016F7E1 /* SceneDelegate.m in Sources */,
+				CA3BA9DAE8CB72F0DB0C619E /* Colors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
