@@ -1,0 +1,8 @@
+platform :ios, '9.0'
+
+target 'IosPokedexOld' do
+  use_frameworks!
+  
+  pod 'SVGKit'
+end
+
