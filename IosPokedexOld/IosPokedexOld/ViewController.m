@@ -5,6 +5,8 @@
 
 @interface ViewController ()
 
+@property (nonatomic, strong) UITableView *tableView;
+
 @end
 
 @implementation ViewController
@@ -13,13 +15,6 @@
   [super viewDidLoad];
 
   self.view.backgroundColor = [Colors primary];
-
-  [self buildHeader];
-
-  [self buildGrid];
-}
-
-- (void)buildHeader {
 
   UIView *header = [[UIView alloc]
       initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
@@ -97,13 +92,49 @@
 
     [search.heightAnchor constraintEqualToConstant:16],
     [search.widthAnchor constraintEqualToConstant:16],
-    [search.leadingAnchor constraintEqualToAnchor:searchInput.leadingAnchor constant:12],
+    [search.leadingAnchor constraintEqualToAnchor:searchInput.leadingAnchor
+                                         constant:12],
     [search.centerYAnchor constraintEqualToAnchor:searchInput.centerYAnchor],
 
   ]];
+
+  UITableView *tableView =
+      [[UITableView alloc] initWithFrame:self.view.bounds
+                                   style:UITableViewStylePlain];
+  tableView.translatesAutoresizingMaskIntoConstraints = NO;
+  tableView.delegate = self;
+  tableView.dataSource = self;
+  tableView.layer.cornerRadius = 8;
+  [self.view addSubview:tableView];
+
+
+  [NSLayoutConstraint activateConstraints:@[
+      [tableView.topAnchor constraintEqualToAnchor:searchInput.bottomAnchor constant:24],
+      [tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:4],
+      [tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-4],
+      [tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+  ]];
 }
 
-- (void)buildGrid {
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
 }
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    // Configure the cell
+    cell.textLabel.text = [@"Index" stringByAppendingString:[@(indexPath.row) stringValue]];
+    
+    return cell;
+}
+
 
 @end
