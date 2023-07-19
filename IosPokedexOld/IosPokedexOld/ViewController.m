@@ -5,7 +5,7 @@
 
 @interface ViewController ()
 
-@property (nonatomic, strong) UITableView *tableView;
+@property(nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -98,43 +98,80 @@
 
   ]];
 
-  UITableView *tableView =
-      [[UITableView alloc] initWithFrame:self.view.bounds
-                                   style:UITableViewStylePlain];
-  tableView.translatesAutoresizingMaskIntoConstraints = NO;
-  tableView.delegate = self;
-  tableView.dataSource = self;
-  tableView.layer.cornerRadius = 8;
-  [self.view addSubview:tableView];
+  UICollectionViewFlowLayout *flowLayout =
+      [[UICollectionViewFlowLayout alloc] init];
+  flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+  flowLayout.minimumInteritemSpacing = 0;
+  flowLayout.minimumLineSpacing = 0;
 
+  UICollectionView *collectionView =
+      [[UICollectionView alloc] initWithFrame:self.view.bounds
+                         collectionViewLayout:flowLayout];
+  collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+  collectionView.delegate = self;
+  collectionView.dataSource = self;
+  [collectionView registerClass:[UICollectionViewCell class]
+      forCellWithReuseIdentifier:@"Cell"];
+  collectionView.layer.cornerRadius = 8;
+  collectionView.backgroundColor = [[Colors grayscale] objectForKey:@"white"];
+  collectionView.showsVerticalScrollIndicator = NO;
+  [self.view addSubview:collectionView];
 
   [NSLayoutConstraint activateConstraints:@[
-      [tableView.topAnchor constraintEqualToAnchor:searchInput.bottomAnchor constant:24],
-      [tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:4],
-      [tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-4],
-      [tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    [collectionView.topAnchor constraintEqualToAnchor:searchInput.bottomAnchor
+                                             constant:24],
+    [collectionView.leadingAnchor
+        constraintEqualToAnchor:self.view.leadingAnchor
+                       constant:4],
+    [collectionView.trailingAnchor
+        constraintEqualToAnchor:self.view.trailingAnchor
+                       constant:-4],
+    [collectionView.bottomAnchor
+        constraintEqualToAnchor:self.view.bottomAnchor],
   ]];
 }
 
-#pragma mark - UITableViewDataSource
+#pragma mark - UICollectionViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  return 20; 
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
-    
-    // Configure the cell
-    cell.textLabel.text = [@"Index" stringByAppendingString:[@(indexPath.row) stringValue]];
-    
-    return cell;
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  UICollectionViewCell *cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell"
+                                                forIndexPath:indexPath];
+
+  // Remove any existing subviews to avoid duplication when reusing cells
+  for (UIView *subview in cell.contentView.subviews) {
+    [subview removeFromSuperview];
+  }
+
+  UILabel *label = [[UILabel alloc] initWithFrame:cell.contentView.bounds];
+  label.text =
+      [@"Index" stringByAppendingString:[@(indexPath.item) stringValue]];
+  label.textAlignment = NSTextAlignmentCenter;
+  label.textColor = [UIColor blackColor];
+  label.backgroundColor = [[Colors grayscale] objectForKey:@"medium"];
+  label.layer.cornerRadius = 8;
+  label.layer.masksToBounds = YES;
+
+  [cell.contentView addSubview:label];
+
+  return cell;
 }
 
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+
+  CGFloat width = (collectionView.bounds.size.width) / 3;
+  CGFloat height = width;
+  return CGSizeMake(width, height);
+}
 
 @end
