@@ -135,7 +135,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-  return 20; 
+  return 20;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
