@@ -1,22 +1,20 @@
 PODS:
-  - CocoaLumberjack (3.7.4):
-    - CocoaLumberjack/Core (= 3.7.4)
-  - CocoaLumberjack/Core (3.7.4)
-  - SVGKit (3.0.0):
-    - CocoaLumberjack (~> 3.0)
+  - Yoga (1.14.0)
+  - YogaKit (1.18.1):
+    - Yoga (~> 1.14)
 
 DEPENDENCIES:
-  - SVGKit
+  - YogaKit (~> 1.18.1)
 
 SPEC REPOS:
   trunk:
-    - CocoaLumberjack
-    - SVGKit
+    - Yoga
+    - YogaKit
 
 SPEC CHECKSUMS:
-  CocoaLumberjack: 543c79c114dadc3b1aba95641d8738b06b05b646
-  SVGKit: 1ad7513f8c74d9652f94ed64ddecda1a23864dea
+  Yoga: cff67a400f6b74dc38eb0bad4f156673d9aa980c
+  YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 1f22253034d4f555ba6a78f7ee4eb503a8fe32ea
+PODFILE CHECKSUM: cb00a25946b4c16dba93051684e645a92c10de77
 
 COCOAPODS: 1.12.1
