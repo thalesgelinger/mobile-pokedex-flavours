@@ -9,4 +9,9 @@
 
 @implementation PokedexViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.navigation.title = @"Pokedex";
+}
+
 @end

@@ -13,9 +13,15 @@
 
 @implementation ViewController
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:<#aDecoder#>]){
+        UIViewController *pokedexVC = [[UIViewController alloc] init];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 

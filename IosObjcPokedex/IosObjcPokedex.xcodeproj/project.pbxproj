@@ -17,6 +17,7 @@
 		82F2B7182AC47F8E00C18D32 /* IosObjcPokedexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2B7172AC47F8E00C18D32 /* IosObjcPokedexTests.m */; };
 		82F2B7222AC47F8E00C18D32 /* IosObjcPokedexUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2B7212AC47F8E00C18D32 /* IosObjcPokedexUITests.m */; };
 		82F2B7242AC47F8E00C18D32 /* IosObjcPokedexUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2B7232AC47F8E00C18D32 /* IosObjcPokedexUITestsLaunchTests.m */; };
+		82F2B7322AC495B200C18D32 /* PokedexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F2B7312AC495B100C18D32 /* PokedexViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,8 @@
 		82F2B71D2AC47F8E00C18D32 /* IosObjcPokedexUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IosObjcPokedexUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82F2B7212AC47F8E00C18D32 /* IosObjcPokedexUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IosObjcPokedexUITests.m; sourceTree = "<group>"; };
 		82F2B7232AC47F8E00C18D32 /* IosObjcPokedexUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IosObjcPokedexUITestsLaunchTests.m; sourceTree = "<group>"; };
+		82F2B7302AC495B100C18D32 /* PokedexViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PokedexViewController.h; sourceTree = "<group>"; };
+		82F2B7312AC495B100C18D32 /* PokedexViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PokedexViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 				82F2B7092AC47F8E00C18D32 /* LaunchScreen.storyboard */,
 				82F2B70C2AC47F8E00C18D32 /* Info.plist */,
 				82F2B70D2AC47F8E00C18D32 /* main.m */,
+				82F2B7302AC495B100C18D32 /* PokedexViewController.h */,
+				82F2B7312AC495B100C18D32 /* PokedexViewController.m */,
 			);
 			path = IosObjcPokedex;
 			sourceTree = "<group>";
@@ -266,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82F2B7322AC495B200C18D32 /* PokedexViewController.m in Sources */,
 				82F2B7032AC47F8C00C18D32 /* ViewController.m in Sources */,
 				82F2B6FD2AC47F8C00C18D32 /* AppDelegate.m in Sources */,
 				82F2B70E2AC47F8E00C18D32 /* main.m in Sources */,
