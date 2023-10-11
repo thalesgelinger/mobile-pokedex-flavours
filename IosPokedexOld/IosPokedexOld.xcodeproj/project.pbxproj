@@ -11,6 +11,7 @@
 		4AACE27CDA6BC5F184770C33 /* PokeList.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3C525B325A64F4CE5564AE /* PokeList.m */; };
 		619EFA31F5DC300CF1D941CC /* Pods_IosPokedexOld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FB40A8BC855059588D072CF /* Pods_IosPokedexOld.framework */; };
 		69966EA38B5DAA0FBE93571A /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 444EDFD29E9BD9EBF7868E93 /* Colors.m */; };
+		6D16ECFF66A4B75AD28EE7C9 /* PokeHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A030099C15C13BCACC0CCF /* PokeHeader.m */; };
 		824389122A50B17300087CB4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 824389112A50B17300087CB4 /* AppDelegate.m */; };
 		824389152A50B17300087CB4 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 824389142A50B17300087CB4 /* SceneDelegate.m */; };
 		824389182A50B17300087CB4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 824389172A50B17300087CB4 /* ViewController.m */; };
@@ -42,6 +43,7 @@
 		8243891F2A50B17400087CB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		824389212A50B17400087CB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		824389222A50B17400087CB4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C4A030099C15C13BCACC0CCF /* PokeHeader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PokeHeader.m; path = IosPokedexOld/PokeHeader.m; sourceTree = "<group>"; };
 		CE785C918F830E02B0EDC835 /* Header.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Header.m; path = IosPokedexOld/Header.m; sourceTree = "<group>"; };
 		D0B8A1977E78FDBF2EF1252E /* Pods-IosPokedexOld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IosPokedexOld.release.xcconfig"; path = "Target Support Files/Pods-IosPokedexOld/Pods-IosPokedexOld.release.xcconfig"; sourceTree = "<group>"; };
 		D346E028FDC04E0778CDADA6 /* search.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				DC3C525B325A64F4CE5564AE /* PokeList.m */,
 				CE785C918F830E02B0EDC835 /* Header.m */,
 				2D62F1BC3DCF0DB2B8AF82AD /* Frameworks */,
+				C4A030099C15C13BCACC0CCF /* PokeHeader.m */,
 			);
 			sourceTree = "<group>";
 		};
@@ -246,6 +249,7 @@
 				376A9D0FC9899AE14D6C44C2 /* TextInput.m in Sources */,
 				4AACE27CDA6BC5F184770C33 /* PokeList.m in Sources */,
 				AC5A17394FEB2CF7EC18AB92 /* Header.m in Sources */,
+				6D16ECFF66A4B75AD28EE7C9 /* PokeHeader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

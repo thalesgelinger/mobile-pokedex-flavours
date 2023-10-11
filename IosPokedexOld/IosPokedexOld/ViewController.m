@@ -21,39 +21,7 @@
 
   UIView *parentView = self.view;
 
-  [parentView configureLayoutWithBlock:^(YGLayout *layout) {
-    layout.isEnabled = YES;
-    layout.flexDirection = YGFlexDirectionColumn;
-  }];
-  parentView.backgroundColor = [UIColor redColor];
-
-  UIView *childView1 = [[UIView alloc] init];
-  [childView1 configureLayoutWithBlock:^(YGLayout *layout) {
-    layout.isEnabled = YES;
-    layout.flexGrow = 1;
-    layout.flexDirection = YGFlexDirectionRow;
-    layout.alignItems = YGAlignCenter;       // Center vertically
-    layout.justifyContent = YGJustifyCenter; // Center horizontally
-  }];
-  childView1.backgroundColor = [UIColor blueColor];
-
-  UIView *sub1 = [[UIView alloc] init];
-  [sub1 configureLayoutWithBlock:^(YGLayout *layout) {
-    layout.isEnabled = YES;
-    layout.height = YGPointValue(20);
-    layout.width = YGPointValue(20);
-  }];
-  sub1.backgroundColor = [UIColor yellowColor];
-  [childView1 addSubview:sub1];
-
-  UIView *childView2 = [[UIView alloc] init];
-  [childView2 configureLayoutWithBlock:^(YGLayout *layout) {
-    layout.isEnabled = YES;
-    layout.flexGrow = 1;
-  }];
-
-  [parentView addSubview:childView1];
-  [parentView addSubview:childView2];
+  PokeHeader *header = [[PokeHeader]];
 
   [parentView.yoga applyLayoutPreservingOrigin:YES];
 }
