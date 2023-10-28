@@ -7,6 +7,8 @@
 
 #import "PokeListViewController.h"
 #import "PHeader.h"
+#import <YogaKit/YGLayout.h>
+#import <YogaKit/UIView+Yoga.h>
 
 @interface PokeListViewController ()
 
@@ -21,9 +23,19 @@
     
     self.view.backgroundColor = [UIColor colorNamed:@"Primary"];
     
-    self.pheader = [[PHeader alloc] initWithFrame:CGRectMake(0,0, self.view.frame.size.width, 120)];
+    [self.view configureLayoutWithBlock:^(YGLayout *layout) {
+        layout.isEnabled = YES;
+        layout.flexDirection = YGFlexDirectionRow;
+        layout.width = YGPercentValue(100);
+        layout.height = YGPercentValue(100);
+        layout.padding = YGPointValue(4);
+    }];
     
+    self.pheader = [[PHeader alloc] init];
     [self.view addSubview:self.pheader];
+    
+    
+    [self.view.yoga applyLayoutPreservingOrigin:YES];
 }
 
 
