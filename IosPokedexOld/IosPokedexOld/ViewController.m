@@ -1,16 +1,6 @@
 #import "ViewController.h"
-#include "Colors.h"
-#include "Header.h"
-#include "Icon.h"
-#include "TextInput.h"
-#include "YGEnums.h"
-#include <UIKit/UIColor.h>
-#include <YogaKit/UIView+Yoga.h>
-#include <YogaKit/YGLayout.h>
 
 @interface ViewController ()
-
-@property(nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -19,11 +9,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  UIView *parentView = self.view;
+  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 200, 50)];
+  view.backgroundColor = [UIColor redColor];
+  view.center = self.view.center;
 
-  PokeHeader *header = [[PokeHeader]];
-
-  [parentView.yoga applyLayoutPreservingOrigin:YES];
+  [self.view addSubview:view];
 }
 
 // - (void)viewDidLoad {
@@ -76,48 +66,5 @@
 //         constraintEqualToAnchor:self.view.bottomAnchor],
 //   ]];
 // }
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section {
-  return 20;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  UICollectionViewCell *cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell"
-                                                forIndexPath:indexPath];
-
-  // Remove any existing subviews to avoid duplication when reusing cells
-  for (UIView *subview in cell.contentView.subviews) {
-    [subview removeFromSuperview];
-  }
-
-  UILabel *label = [[UILabel alloc] initWithFrame:cell.contentView.bounds];
-  label.text =
-      [@"Index" stringByAppendingString:[@(indexPath.item) stringValue]];
-  label.textAlignment = NSTextAlignmentCenter;
-  label.textColor = [UIColor blackColor];
-  label.backgroundColor = [[Colors grayscale] objectForKey:@"medium"];
-  label.layer.cornerRadius = 8;
-  label.layer.masksToBounds = YES;
-
-  [cell.contentView addSubview:label];
-
-  return cell;
-}
-
-#pragma mark - UICollectionViewDelegateFlowLayout
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                    layout:(UICollectionViewLayout *)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-
-  CGFloat width = (collectionView.bounds.size.width) / 3;
-  CGFloat height = width;
-  return CGSizeMake(width, height);
-}
 
 @end

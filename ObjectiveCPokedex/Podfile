@@ -1,0 +1,8 @@
+platform :ios, '17.0'
+use_frameworks!
+
+target 'ObjectiveCPokedex' do
+  pod 'YogaKit', '~> 2.0.0'
+end
+
+
