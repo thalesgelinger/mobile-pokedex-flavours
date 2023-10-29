@@ -1,18 +1,13 @@
-//
-//  PokeListViewController.m
-//  ObjectiveCPokedex
-//
-//  Created by Thales Gelinger on 27/10/23.
-//
-
 #import "PokeListViewController.h"
+#import "PokeCollectionViewCell.h"
 #import "PHeader.h"
 #import <YogaKit/YGLayout.h>
 #import <YogaKit/UIView+Yoga.h>
 
-@interface PokeListViewController ()
+@interface PokeListViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) PHeader *pheader;
+@property (strong, nonatomic) UICollectionView *collectionView;
 
 @end
 
@@ -20,22 +15,54 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.view.backgroundColor = [UIColor colorNamed:@"Primary"];
-    
+
     [self.view configureLayoutWithBlock:^(YGLayout *layout) {
         layout.isEnabled = YES;
-        layout.flexDirection = YGFlexDirectionRow;
+        layout.flexDirection = YGFlexDirectionColumn;
         layout.width = YGPercentValue(100);
         layout.height = YGPercentValue(100);
-        layout.padding = YGPointValue(4);
     }];
-    
-    self.pheader = [[PHeader alloc] init];
+
+    _pheader = [[PHeader alloc] init];
     [self.view addSubview:self.pheader];
-    
-    
+
     [self.view.yoga applyLayoutPreservingOrigin:YES];
+
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.minimumInteritemSpacing = 4;
+    layout.itemSize = CGSizeMake((self.view.frame.size.width - 16 ) / 3, 120);
+
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+    _collectionView.backgroundColor = [UIColor colorNamed:@"White"];
+    _collectionView.dataSource = self;
+    _collectionView.delegate = self;
+    _collectionView.showsVerticalScrollIndicator = NO;
+    _collectionView.layer.cornerRadius = 8;
+    _collectionView.clipsToBounds = YES;
+
+    [self.view addSubview:_collectionView];
+
+    [_collectionView registerClass:[PokeCollectionViewCell class] forCellWithReuseIdentifier:@"CellIdentifier"];
+    
+    [_collectionView configureLayoutWithBlock:^(YGLayout *layout) {
+        layout.isEnabled = YES;
+        layout.flexGrow = 1;
+        layout.margin = YGPointValue(4);
+    }];
+
+    [self.view.yoga applyLayoutPreservingOrigin:YES];
+}
+
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 20;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    PokeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellIdentifier" forIndexPath:indexPath];
+    return cell;
 }
 
 

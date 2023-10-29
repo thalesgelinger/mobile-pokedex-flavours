@@ -14,7 +14,6 @@
             layout.alignItems = YGAlignCenter;
             layout.marginTop = YGPointValue(60);
             layout.width = YGPercentValue(100);
-            layout.height = YGPointValue(108);
             layout.padding = YGPointValue(12);
             layout.paddingBottom = YGPointValue(24);
         }];
