@@ -10,6 +10,7 @@
 		8259F5DB2AEC6A7800BA1B14 /* PokeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8259F5DA2AEC6A7800BA1B14 /* PokeListViewController.m */; };
 		8259F5DD2AEC6FF300BA1B14 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8259F5DC2AEC6FF300BA1B14 /* Colors.xcassets */; };
 		8259F5E62AEDD68B00BA1B14 /* PokeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8259F5E52AEDD68B00BA1B14 /* PokeCollectionViewCell.m */; };
+		8259F5E92AF031BF00BA1B14 /* PokeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8259F5E82AF031BF00BA1B14 /* PokeData.m */; };
 		827E56372AEC420100FFD5B8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 827E56362AEC420100FFD5B8 /* AppDelegate.m */; };
 		827E563A2AEC420100FFD5B8 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 827E56392AEC420100FFD5B8 /* SceneDelegate.m */; };
 		827E563D2AEC420100FFD5B8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 827E563C2AEC420100FFD5B8 /* ViewController.m */; };
@@ -29,6 +30,8 @@
 		8259F5DC2AEC6FF300BA1B14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		8259F5E42AEDD68B00BA1B14 /* PokeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PokeCollectionViewCell.h; sourceTree = "<group>"; };
 		8259F5E52AEDD68B00BA1B14 /* PokeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PokeCollectionViewCell.m; sourceTree = "<group>"; };
+		8259F5E72AF031BF00BA1B14 /* PokeData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PokeData.h; sourceTree = "<group>"; };
+		8259F5E82AF031BF00BA1B14 /* PokeData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PokeData.m; sourceTree = "<group>"; };
 		827E56322AEC420100FFD5B8 /* ObjectiveCPokedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjectiveCPokedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		827E56352AEC420100FFD5B8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		827E56362AEC420100FFD5B8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 				8259F5DC2AEC6FF300BA1B14 /* Colors.xcassets */,
 				8259F5E42AEDD68B00BA1B14 /* PokeCollectionViewCell.h */,
 				8259F5E52AEDD68B00BA1B14 /* PokeCollectionViewCell.m */,
+				8259F5E72AF031BF00BA1B14 /* PokeData.h */,
+				8259F5E82AF031BF00BA1B14 /* PokeData.m */,
 			);
 			path = ObjectiveCPokedex;
 			sourceTree = "<group>";
@@ -243,6 +248,7 @@
 				827E56372AEC420100FFD5B8 /* AppDelegate.m in Sources */,
 				827E56482AEC420200FFD5B8 /* main.m in Sources */,
 				827E563A2AEC420100FFD5B8 /* SceneDelegate.m in Sources */,
+				8259F5E92AF031BF00BA1B14 /* PokeData.m in Sources */,
 				8259F5DB2AEC6A7800BA1B14 /* PokeListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

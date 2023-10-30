@@ -6,12 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PokeData.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PokeCollectionViewCell : UICollectionViewCell
 
-- (void) setNumber:(long)number;
+- (void) setPokeData:(PokeData *)pokeData;
 
 @end
 

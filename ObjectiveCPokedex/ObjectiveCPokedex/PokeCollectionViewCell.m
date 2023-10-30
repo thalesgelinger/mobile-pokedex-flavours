@@ -1,4 +1,6 @@
 #import "PokeCollectionViewCell.h"
+#import "PokeData.h"
+#import <YogaKit/YGLayout.h>
 #import <YogaKit/YGLayout.h>
 #import <YogaKit/UIView+Yoga.h>
 #import <QuartzCore/QuartzCore.h>
@@ -6,7 +8,7 @@
 @interface PokeCollectionViewCell()
 
 @property (strong, nonatomic) UIView *pokeCard;
-@property (nonatomic) long numberIndex;
+@property (nonatomic) PokeData *pokeData;
 
 @end
 
@@ -57,7 +59,7 @@
     
     
     UILabel *number = [[UILabel alloc] init];
-    number.text = [NSString stringWithFormat:@"#%ld", _numberIndex];
+    number.text = [NSString stringWithFormat:@"#%@", _pokeData.number];
     number.textColor = [UIColor colorNamed:@"Medium"];
     number.textAlignment = NSTextAlignmentRight;
     number.font = [UIFont systemFontOfSize:8];
@@ -78,28 +80,26 @@
         layout.isEnabled = YES;
         layout.flexGrow = 1;
     }];
-    
-    NSString *pokeImgUrlStr = @"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png";
 
     NSURLSession *session = [NSURLSession sharedSession];
-    NSURL *pokeImgUrl = [NSURL URLWithString:pokeImgUrlStr];
-
+    NSURL *pokeImgUrl = [NSURL URLWithString:_pokeData.imgUrl];
+    
     NSURLSessionDataTask *task = [session dataTaskWithURL:pokeImgUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (data) {
-            UIImage *image = [UIImage imageWithData:data];
+           if (data) {
+               UIImage *image = [UIImage imageWithData:data];
 
-            dispatch_async(dispatch_get_main_queue(), ^{
-                pokeImg.image = image;
-            });
-        } else {
-            NSLog(@"Error loading image: %@", error.localizedDescription);
-        }
+               dispatch_async(dispatch_get_main_queue(), ^{
+                   pokeImg.image = image;
+               });
+           } else {
+               NSLog(@"Error loading image: %@", error.localizedDescription);
+           }
     }];
 
     [task resume];
     
     UILabel *name = [[UILabel alloc] init];
-    name.text = @"Blubassaur";
+    name.text = _pokeData.name;
     name.textColor = [UIColor colorNamed:@"Medium"];
     name.textAlignment = NSTextAlignmentCenter;
     name.font = [UIFont systemFontOfSize:10];
@@ -114,8 +114,9 @@
     [self.contentView.yoga applyLayoutPreservingOrigin:YES];
 }
 
-- (void) setNumber:(long)number {
-    _numberIndex = number;
+- (void) setPokeData:(PokeData *)pokeData {
+    _pokeData = pokeData;
 }
+
 
 @end
