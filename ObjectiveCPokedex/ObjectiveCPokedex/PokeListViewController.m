@@ -31,8 +31,10 @@
     [self.view.yoga applyLayoutPreservingOrigin:YES];
 
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumInteritemSpacing = 4;
-    layout.itemSize = CGSizeMake((self.view.frame.size.width - 16 ) / 3, 120);
+    layout.minimumInteritemSpacing = 0;
+    layout.minimumLineSpacing = 0;
+    CGFloat size = (self.view.frame.size.width - 8) / 3;
+    layout.itemSize = CGSizeMake(size, size);
 
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     _collectionView.backgroundColor = [UIColor colorNamed:@"White"];
@@ -50,6 +52,8 @@
         layout.isEnabled = YES;
         layout.flexGrow = 1;
         layout.margin = YGPointValue(4);
+        layout.paddingHorizontal = YGPointValue(12);
+        layout.paddingTop = YGPointValue(24);
     }];
 
     [self.view.yoga applyLayoutPreservingOrigin:YES];
@@ -61,9 +65,10 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     PokeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellIdentifier" forIndexPath:indexPath];
+    [cell setNumber:indexPath.item];
     return cell;
 }
-
 
 @end

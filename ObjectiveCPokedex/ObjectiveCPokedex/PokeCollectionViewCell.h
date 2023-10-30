@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PokeCollectionViewCell : UICollectionViewCell
 
+- (void) setNumber:(long)number;
+
 @end
 
 NS_ASSUME_NONNULL_END
