@@ -6,6 +6,7 @@
 @interface PokeDetailsViewController ()
 
 @property (strong, nonatomic) PokeDetails *pokeDetails;
+@property (strong, nonatomic) UIView *topHeader;
 
 @end
 
@@ -32,9 +33,101 @@
     if(_pokeDetails){
         [self buildHeader];
         
+        UIView *pokeRow = [[UIView alloc] initWithFrame:CGRectMake(0, 150, self.view.frame.size.width, 250)];
+        
+        pokeRow.yoga.isIncludedInLayout = NO;
+        
+        [self.view addSubview:pokeRow];
+        
         [self buildInfos];
+        
+        [self buildPokeRow:pokeRow];
+        
+        [self.view bringSubviewToFront:pokeRow];
     }
     [self.view.yoga applyLayoutPreservingOrigin:YES];
+}
+
+-(void)buildPokeRow: (UIView *) pokeRow {
+    
+    UIView *mainRow = UIView.new;
+    
+    [pokeRow addSubview:mainRow];
+    [pokeRow bringSubviewToFront:mainRow];
+    
+    [mainRow configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
+        layout.isEnabled = YES;
+        layout.width = YGPointValue(pokeRow.frame.size.width);
+        layout.height = YGPointValue(pokeRow.frame.size.height);
+        layout.flexDirection = YGFlexDirectionRow;
+    }];
+    
+    
+    UIImage *leftImg = [UIImage imageNamed:@"chevron_left"];
+    leftImg = [leftImg imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImageView *leftIcon = [[UIImageView alloc] initWithImage:leftImg ];
+    [leftIcon setTintColor:[UIColor colorNamed:@"White"]];
+    
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftButton addTarget:self action:@selector(goPrevious:) forControlEvents:UIControlEventTouchUpInside];
+    leftButton.userInteractionEnabled = YES;
+    
+    [leftButton addSubview:leftIcon];
+    [mainRow addSubview:leftButton];
+    
+    [leftButton configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
+        layout.isEnabled = YES;
+        layout.alignSelf = YGAlignCenter;
+    }];
+    
+    UIImageView *pokeImg = [[UIImageView alloc] init];
+    [mainRow addSubview:pokeImg];
+    [mainRow bringSubviewToFront:pokeImg];
+    
+    [pokeImg configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
+        layout.isEnabled = YES;
+        layout.flexGrow = 1;
+        layout.marginLeft = YGPointValue(20);
+    }];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURL *pokeImgUrl = [NSURL URLWithString:_pokeDetails.imgUrl];
+    
+    NSURLSessionDataTask *task = [session dataTaskWithURL:pokeImgUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+           if (data) {
+               UIImage *image = [UIImage imageWithData:data];
+
+               dispatch_async(dispatch_get_main_queue(), ^{
+                   pokeImg.image = image;
+               });
+           } else {
+               NSLog(@"Error loading image: %@", error.localizedDescription);
+           }
+    }];
+
+    [task resume];
+    
+    UIImage *rightImg = [UIImage imageNamed:@"chevron_right"];
+    rightImg = [rightImg imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImageView *rightIcon = [[UIImageView alloc] initWithImage:rightImg ];
+    [rightIcon setTintColor:[UIColor colorNamed:@"White"]];
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton addTarget:self action:@selector(goNext:) forControlEvents:UIControlEventTouchUpInside];
+    rightButton.userInteractionEnabled = YES;
+    
+    [rightButton addSubview:rightIcon];
+    [mainRow addSubview:rightButton];
+    
+    [rightButton configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
+        layout.isEnabled = YES;
+        layout.alignSelf = YGAlignCenter;
+        layout.marginRight = YGPointValue(20);
+    }];
+
+    
+    
+    [mainRow.yoga applyLayoutPreservingOrigin:YES];
 }
 
 -(NSString *) capitalize: (NSString *) str {
@@ -48,7 +141,6 @@
     NSString *inputString = _pokeDetails.types[0];
     NSString *typeCapitalized = [self capitalize:inputString];
                                 
-    NSLog(@"%@", _pokeDetails.types);
     self.view.backgroundColor = [UIColor colorNamed:typeCapitalized];
     
     UIImage *pokeballImg = [UIImage imageNamed:@"pokeball"];
@@ -62,11 +154,11 @@
     
     [self.view addSubview:pokeball];
     
-    UIView *topHeader = [[UIView alloc] init];
+    _topHeader = [[UIView alloc] init];
     
-    [self.view addSubview:topHeader];
+    [self.view addSubview:_topHeader];
     
-    [topHeader configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
+    [_topHeader configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
         layout.isEnabled = YES;
         layout.flexDirection = YGFlexDirectionRow;
         layout.width = YGPercentValue(100);
@@ -86,7 +178,7 @@
     backButton.userInteractionEnabled = YES;
     
     [backButton addSubview:backIcon];
-    [topHeader addSubview:backButton];
+    [_topHeader addSubview:backButton];
     
     [backButton configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
         layout.isEnabled = YES;
@@ -102,7 +194,7 @@
     title.font = [UIFont systemFontOfSize:24 weight:700];
     title.textColor = [UIColor colorNamed:@"White"];
     
-    [topHeader addSubview:title];
+    [_topHeader addSubview:title];
     
     [title configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
         layout.isEnabled = YES;
@@ -116,7 +208,7 @@
     number.font = [UIFont systemFontOfSize:12 weight:700];
     number.textColor = [UIColor colorNamed:@"White"];
     
-    [topHeader addSubview:number];
+    [_topHeader addSubview:number];
     
     [number configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
         layout.isEnabled = YES;
@@ -555,6 +647,15 @@
         layout.isEnabled = YES;
     }];
     
+}
+
+
+- (void)goPrevious:(UIButton *)sender {
+    NSLog(@"Previous");
+}
+
+- (void)goNext:(UIButton *)sender {
+    NSLog(@"Next");
 }
 
 - (void)goBack:(UIButton *)sender {
