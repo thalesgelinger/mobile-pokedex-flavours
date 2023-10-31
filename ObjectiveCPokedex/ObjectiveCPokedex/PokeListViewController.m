@@ -1,4 +1,6 @@
 #import "PokeListViewController.h"
+#import "PokeDetailsViewController.h"
+#import "PokeCollectionViewCell.h"
 #import "PokeCollectionViewCell.h"
 #import "PHeader.h"
 #import "PokeData.h"
@@ -131,8 +133,17 @@
     
     PokeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellIdentifier" forIndexPath:indexPath];
     [cell setPokeData:[_pokemons objectAtIndex:indexPath.item]];
+    NSLog(@"%@", indexPath);
     
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    PokeDetailsViewController *pokeDetailsVC = [[PokeDetailsViewController alloc] init];
+    pokeDetailsVC.pokeData = [_pokemons objectAtIndex:indexPath.item];
+    [self.navigationController pushViewController:pokeDetailsVC animated:YES];
+    
 }
 
 @end

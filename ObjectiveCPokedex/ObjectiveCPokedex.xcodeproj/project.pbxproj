@@ -20,6 +20,8 @@
 		827E56482AEC420200FFD5B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 827E56472AEC420200FFD5B8 /* main.m */; };
 		827E56502AEC458200FFD5B8 /* PHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 827E564F2AEC458200FFD5B8 /* PHeader.m */; };
 		827E56522AEC477D00FFD5B8 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 827E56512AEC477D00FFD5B8 /* Icons.xcassets */; };
+		829114942AF0654800218D0C /* PokeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 829114932AF0654800218D0C /* PokeDetailsViewController.m */; };
+		82F98C012AF0883F004AD37B /* PokeDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F98C002AF0883F004AD37B /* PokeDetails.m */; };
 		CC8FB0BEEFBD8DBA3E214370 /* Pods_ObjectiveCPokedex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7807407EE8192CDD2E72FE9 /* Pods_ObjectiveCPokedex.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +49,10 @@
 		827E564E2AEC458200FFD5B8 /* PHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHeader.h; sourceTree = "<group>"; };
 		827E564F2AEC458200FFD5B8 /* PHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PHeader.m; sourceTree = "<group>"; };
 		827E56512AEC477D00FFD5B8 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		829114922AF0654700218D0C /* PokeDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PokeDetailsViewController.h; sourceTree = "<group>"; };
+		829114932AF0654800218D0C /* PokeDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PokeDetailsViewController.m; sourceTree = "<group>"; };
+		82F98BFF2AF0883F004AD37B /* PokeDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PokeDetails.h; sourceTree = "<group>"; };
+		82F98C002AF0883F004AD37B /* PokeDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PokeDetails.m; sourceTree = "<group>"; };
 		9D345C2A180DF9219849A87B /* Pods-ObjectiveCPokedex.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveCPokedex.release.xcconfig"; path = "Target Support Files/Pods-ObjectiveCPokedex/Pods-ObjectiveCPokedex.release.xcconfig"; sourceTree = "<group>"; };
 		C7807407EE8192CDD2E72FE9 /* Pods_ObjectiveCPokedex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjectiveCPokedex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -113,6 +119,10 @@
 				8259F5E52AEDD68B00BA1B14 /* PokeCollectionViewCell.m */,
 				8259F5E72AF031BF00BA1B14 /* PokeData.h */,
 				8259F5E82AF031BF00BA1B14 /* PokeData.m */,
+				829114922AF0654700218D0C /* PokeDetailsViewController.h */,
+				829114932AF0654800218D0C /* PokeDetailsViewController.m */,
+				82F98BFF2AF0883F004AD37B /* PokeDetails.h */,
+				82F98C002AF0883F004AD37B /* PokeDetails.m */,
 			);
 			path = ObjectiveCPokedex;
 			sourceTree = "<group>";
@@ -242,6 +252,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				829114942AF0654800218D0C /* PokeDetailsViewController.m in Sources */,
+				82F98C012AF0883F004AD37B /* PokeDetails.m in Sources */,
 				827E56502AEC458200FFD5B8 /* PHeader.m in Sources */,
 				827E563D2AEC420100FFD5B8 /* ViewController.m in Sources */,
 				8259F5E62AEDD68B00BA1B14 /* PokeCollectionViewCell.m in Sources */,
