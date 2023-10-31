@@ -1,7 +1,6 @@
 #import "PokeListViewController.h"
 #import "PokeDetailsViewController.h"
 #import "PokeCollectionViewCell.h"
-#import "PokeCollectionViewCell.h"
 #import "PHeader.h"
 #import "PokeData.h"
 #import <YogaKit/YGLayout.h>
@@ -133,7 +132,6 @@
     
     PokeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellIdentifier" forIndexPath:indexPath];
     [cell setPokeData:[_pokemons objectAtIndex:indexPath.item]];
-    NSLog(@"%@", indexPath);
     
     return cell;
 }

@@ -13,14 +13,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.pokeDetails = [[PokeDetails alloc] init];
+    
     [self.view configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
         layout.isEnabled = YES;
         layout.flexGrow = 1;
+        layout.width = YGPercentValue(100);
+        layout.height = YGPercentValue(100);
     }];
    
     [self fetchPokeDetails];
+    [self buildView];
     
     [self.view.yoga applyLayoutPreservingOrigin:YES];
+}
+
+-(void) buildView {
+    if(_pokeDetails){
+        NSString *inputString = _pokeDetails.types[0];
+        NSString *typeCapitalized = [inputString stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                              withString:[[inputString substringToIndex:1] capitalizedString]];
+        NSLog(@"%@", _pokeDetails.types);
+        self.view.backgroundColor = [UIColor colorNamed:typeCapitalized];
+    }
 }
 
 -(void) fetchPokeDetails {
@@ -32,19 +48,20 @@
         if(data){
             NSError *err;
             NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
-            self.pokeDetails = [[PokeDetails alloc] init];
-            self.pokeDetails.name = self.pokeData.name;
-            self.pokeDetails.number = self.pokeData.number;
-            self.pokeDetails.imgUrl = self.pokeData.imgUrl;
-            self.pokeDetails.height = response[@"height"];
-            self.pokeDetails.weight = response[@"weigth"];
+            
+            PokeDetails *pokeDetails = [[PokeDetails alloc] init];
+            pokeDetails.name = self.pokeData.name;
+            pokeDetails.number = self.pokeData.number;
+            pokeDetails.imgUrl = self.pokeData.imgUrl;
+            pokeDetails.height = response[@"height"];
+            pokeDetails.weight = response[@"weigth"];
             NSMutableArray<NSString *> *abilities = NSMutableArray.new;
             
             for (NSDictionary *ability in response[@"abilities"]){
                 [abilities addObject:ability[@"ability"][@"name"]];
             }
             
-            self.pokeDetails.abilities = abilities;
+            pokeDetails.abilities = abilities;
             
             
             NSMutableArray<NSString *> *types = NSMutableArray.new;
@@ -53,7 +70,7 @@
                 [types addObject:type[@"type"][@"name"]];
             }
             
-            self.pokeDetails.types = types;
+            pokeDetails.types = types;
             
             NSMutableDictionary *stats = NSMutableDictionary.new;
             
@@ -61,7 +78,12 @@
                 [stats setValue:stat[@"base_stat"] forKey:stat[@"stat"][@"name"]];
             }
             
-            self.pokeDetails.stats = stats;
+            pokeDetails.stats = stats;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.pokeDetails = pokeDetails;
+                [self buildView];
+            });
             
         } else {
             NSLog(@"Error fetching pokemons details");
@@ -70,6 +92,5 @@
     }] resume];
     
 }
-
 
 @end
