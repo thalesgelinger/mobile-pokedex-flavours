@@ -63,22 +63,24 @@
     }];
     
     
-    UIImage *leftImg = [UIImage imageNamed:@"chevron_left"];
-    leftImg = [leftImg imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIImageView *leftIcon = [[UIImageView alloc] initWithImage:leftImg ];
-    [leftIcon setTintColor:[UIColor colorNamed:@"White"]];
-    
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton addTarget:self action:@selector(goPrevious:) forControlEvents:UIControlEventTouchUpInside];
-    leftButton.userInteractionEnabled = YES;
-    
-    [leftButton addSubview:leftIcon];
-    [mainRow addSubview:leftButton];
-    
-    [leftButton configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
-        layout.isEnabled = YES;
-        layout.alignSelf = YGAlignCenter;
-    }];
+    if(_pokeId.intValue > 1){
+        UIImage *leftImg = [UIImage imageNamed:@"chevron_left"];
+        leftImg = [leftImg imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImageView *leftIcon = [[UIImageView alloc] initWithImage:leftImg ];
+        [leftIcon setTintColor:[UIColor colorNamed:@"White"]];
+        
+        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [leftButton addTarget:self action:@selector(goPrevious:) forControlEvents:UIControlEventTouchUpInside];
+        leftButton.userInteractionEnabled = YES;
+        
+        [leftButton addSubview:leftIcon];
+        [mainRow addSubview:leftButton];
+        
+        [leftButton configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
+            layout.isEnabled = YES;
+            layout.alignSelf = YGAlignCenter;
+        }];
+    }
     
     UIImageView *pokeImg = [[UIImageView alloc] init];
     [mainRow addSubview:pokeImg];
@@ -651,11 +653,29 @@
 
 
 - (void)goPrevious:(UIButton *)sender {
-    NSLog(@"Previous");
+    PokeDetailsViewController *pokeDetailsVC = [[PokeDetailsViewController alloc] init];
+    long nextPokeId =_pokeId.longLongValue - 1;
+    pokeDetailsVC.pokeId = [NSNumber numberWithLong:nextPokeId];
+    
+    NSArray *viewControllers = @[
+        self.navigationController.viewControllers[0],
+        pokeDetailsVC,
+    ];
+    
+    [self.navigationController setViewControllers:viewControllers animated:NO];
 }
 
 - (void)goNext:(UIButton *)sender {
-    NSLog(@"Next");
+    PokeDetailsViewController *pokeDetailsVC = [[PokeDetailsViewController alloc] init];
+    long nextPokeId =_pokeId.longLongValue + 1;
+    pokeDetailsVC.pokeId = [NSNumber numberWithLong:nextPokeId];
+    
+    NSArray *viewControllers = @[
+        self.navigationController.viewControllers[0],
+        pokeDetailsVC,
+    ];
+    
+    [self.navigationController setViewControllers:viewControllers];
 }
 
 - (void)goBack:(UIButton *)sender {
@@ -665,7 +685,7 @@
 
 -(void) fetchPokeDetails {
     
-    NSString *pokeDetailsUrlStr = [@"https://pokeapi.co/api/v2/pokemon/" stringByAppendingString:_pokeData.number.stringValue];
+    NSString *pokeDetailsUrlStr = [@"https://pokeapi.co/api/v2/pokemon/" stringByAppendingString:_pokeId.stringValue];
     NSURL *pokeDetailsUrl = [NSURL URLWithString:pokeDetailsUrlStr];
     [[NSURLSession.sharedSession dataTaskWithURL:pokeDetailsUrl completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
@@ -674,9 +694,9 @@
             NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
             
             self.pokeDetails = [[PokeDetails alloc] init];
-            self.pokeDetails.name = self.pokeData.name;
-            self.pokeDetails.number = self.pokeData.number;
-            self.pokeDetails.imgUrl = self.pokeData.imgUrl;
+            self.pokeDetails.name = response[@"name"];
+            self.pokeDetails.number = self.pokeId;
+            self.pokeDetails.imgUrl = response[@"sprites"][@"front_default"];
             self.pokeDetails.height = response[@"height"];
             self.pokeDetails.weight = response[@"weight"];
             NSMutableArray<NSString *> *abilities = NSMutableArray.new;

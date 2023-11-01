@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PokeDetailsViewController : UIViewController
 
-@property (strong, nonatomic) PokeData *pokeData;
+@property (strong, nonatomic) NSNumber *pokeId;
 
 @end
 

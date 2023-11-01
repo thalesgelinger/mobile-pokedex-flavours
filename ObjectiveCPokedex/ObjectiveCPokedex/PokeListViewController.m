@@ -139,7 +139,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     PokeDetailsViewController *pokeDetailsVC = [[PokeDetailsViewController alloc] init];
-    pokeDetailsVC.pokeData = [_pokemons objectAtIndex:indexPath.item];
+    pokeDetailsVC.pokeId = [_pokemons objectAtIndex:indexPath.item].number;
     [self.navigationController pushViewController:pokeDetailsVC animated:YES];
     
 }
