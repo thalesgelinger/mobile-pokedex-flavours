@@ -1,5 +1,6 @@
 #import "PokeDetailsViewController.h"
 #import "PokeDetails.h"
+#import "PokeStore.h"
 #import <YogaKit/YGLayout.h>
 #import <YogaKit/UIView+Yoga.h>
 
@@ -29,7 +30,15 @@
     
 }
 
+- (void)removeSubviews {
+    for (UIView *subview in self.view.subviews) {
+        [subview removeFromSuperview];
+    }
+}
+
 -(void) buildView {
+    [self removeSubviews];
+    
     if(_pokeDetails){
         [self buildHeader];
         
@@ -685,55 +694,62 @@
 
 -(void) fetchPokeDetails {
     
-    NSString *pokeDetailsUrlStr = [@"https://pokeapi.co/api/v2/pokemon/" stringByAppendingString:_pokeId.stringValue];
-    NSURL *pokeDetailsUrl = [NSURL URLWithString:pokeDetailsUrlStr];
-    [[NSURLSession.sharedSession dataTaskWithURL:pokeDetailsUrl completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        if(data){
-            NSError *err;
-            NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
-            
-            self.pokeDetails = [[PokeDetails alloc] init];
-            self.pokeDetails.name = response[@"name"];
-            self.pokeDetails.number = self.pokeId;
-            self.pokeDetails.imgUrl = response[@"sprites"][@"front_default"];
-            self.pokeDetails.height = response[@"height"];
-            self.pokeDetails.weight = response[@"weight"];
-            NSMutableArray<NSString *> *abilities = NSMutableArray.new;
-            
-            for (NSDictionary *ability in response[@"abilities"]){
-                [abilities addObject:ability[@"ability"][@"name"]];
-            }
-            
-            self.pokeDetails.abilities = abilities;
-            
-            
-            NSMutableArray<NSString *> *types = NSMutableArray.new;
-            
-            for (NSDictionary *type in response[@"types"]){
-                [types addObject:type[@"type"][@"name"]];
-            }
-            
-            self.pokeDetails.types = types;
-            
-            NSMutableDictionary *stats = NSMutableDictionary.new;
-            
-            for(NSDictionary *stat in response[@"stats"]){
-                [stats setValue:(NSString *)stat[@"base_stat"] forKey:stat[@"stat"][@"name"]];
-            }
-            
-            self.pokeDetails.stats = stats;
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self buildView];
-            });
-            
-        } else {
-            NSLog(@"Error fetching pokemons details");
-        }
-        
-    }] resume];
+    _pokeDetails = [PokeStore get:_pokeId.stringValue];
     
+    if(_pokeDetails){
+        [self buildView];
+    } else {
+        NSString *pokeDetailsUrlStr = [@"https://pokeapi.co/api/v2/pokemon/" stringByAppendingString:_pokeId.stringValue];
+        NSURL *pokeDetailsUrl = [NSURL URLWithString:pokeDetailsUrlStr];
+        [[NSURLSession.sharedSession dataTaskWithURL:pokeDetailsUrl completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            
+            if(data){
+                NSError *err;
+                NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+                
+                self.pokeDetails = [[PokeDetails alloc] init];
+                self.pokeDetails.name = response[@"name"];
+                self.pokeDetails.number = self.pokeId;
+                self.pokeDetails.imgUrl = response[@"sprites"][@"front_default"];
+                self.pokeDetails.height = response[@"height"];
+                self.pokeDetails.weight = response[@"weight"];
+                NSMutableArray<NSString *> *abilities = NSMutableArray.new;
+                
+                for (NSDictionary *ability in response[@"abilities"]){
+                    [abilities addObject:ability[@"ability"][@"name"]];
+                }
+                
+                self.pokeDetails.abilities = abilities;
+                
+                
+                NSMutableArray<NSString *> *types = NSMutableArray.new;
+                
+                for (NSDictionary *type in response[@"types"]){
+                    [types addObject:type[@"type"][@"name"]];
+                }
+                
+                self.pokeDetails.types = types;
+                
+                NSMutableDictionary *stats = NSMutableDictionary.new;
+                
+                for(NSDictionary *stat in response[@"stats"]){
+                    [stats setValue:(NSString *)stat[@"base_stat"] forKey:stat[@"stat"][@"name"]];
+                }
+                
+                self.pokeDetails.stats = stats;
+                
+                [PokeStore set:self.pokeDetails key:self.pokeId.stringValue];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self buildView];
+                });
+                
+            } else {
+                NSLog(@"Error fetching pokemons details");
+            }
+            
+        }] resume];
+    }
 }
 
 @end

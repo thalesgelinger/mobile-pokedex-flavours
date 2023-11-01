@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		822882412AF2B774008E89E1 /* PokeStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 822882402AF2B774008E89E1 /* PokeStore.m */; };
 		8259F5DB2AEC6A7800BA1B14 /* PokeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8259F5DA2AEC6A7800BA1B14 /* PokeListViewController.m */; };
 		8259F5DD2AEC6FF300BA1B14 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8259F5DC2AEC6FF300BA1B14 /* Colors.xcassets */; };
 		8259F5E62AEDD68B00BA1B14 /* PokeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8259F5E52AEDD68B00BA1B14 /* PokeCollectionViewCell.m */; };
@@ -27,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		5EB29DB099CF81A8BEBC0CE8 /* Pods-ObjectiveCPokedex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveCPokedex.debug.xcconfig"; path = "Target Support Files/Pods-ObjectiveCPokedex/Pods-ObjectiveCPokedex.debug.xcconfig"; sourceTree = "<group>"; };
+		8228823F2AF2B774008E89E1 /* PokeStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PokeStore.h; sourceTree = "<group>"; };
+		822882402AF2B774008E89E1 /* PokeStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PokeStore.m; sourceTree = "<group>"; };
 		8259F5D92AEC6A7800BA1B14 /* PokeListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PokeListViewController.h; sourceTree = "<group>"; };
 		8259F5DA2AEC6A7800BA1B14 /* PokeListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PokeListViewController.m; sourceTree = "<group>"; };
 		8259F5DC2AEC6FF300BA1B14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -123,6 +126,8 @@
 				829114932AF0654800218D0C /* PokeDetailsViewController.m */,
 				82F98BFF2AF0883F004AD37B /* PokeDetails.h */,
 				82F98C002AF0883F004AD37B /* PokeDetails.m */,
+				8228823F2AF2B774008E89E1 /* PokeStore.h */,
+				822882402AF2B774008E89E1 /* PokeStore.m */,
 			);
 			path = ObjectiveCPokedex;
 			sourceTree = "<group>";
@@ -258,6 +263,7 @@
 				827E563D2AEC420100FFD5B8 /* ViewController.m in Sources */,
 				8259F5E62AEDD68B00BA1B14 /* PokeCollectionViewCell.m in Sources */,
 				827E56372AEC420100FFD5B8 /* AppDelegate.m in Sources */,
+				822882412AF2B774008E89E1 /* PokeStore.m in Sources */,
 				827E56482AEC420200FFD5B8 /* main.m in Sources */,
 				827E563A2AEC420100FFD5B8 /* SceneDelegate.m in Sources */,
 				8259F5E92AF031BF00BA1B14 /* PokeData.m in Sources */,
