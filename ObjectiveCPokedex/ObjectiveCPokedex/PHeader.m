@@ -2,6 +2,13 @@
 #import <YogaKit/YGLayout.h>
 #import <YogaKit/UIView+Yoga.h>
 
+@interface PHeader()
+
+@property (strong, nonatomic) UITextField *searchField;
+@property (nonatomic, copy) void (^textChangeCallback)(NSString *text);
+
+@end
+
 @implementation PHeader
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -89,17 +96,18 @@
             layout.marginRight = YGPointValue(8);
         }];
         
-        UITextField *searchField = [[UITextField alloc] init];
-        searchField.placeholder = @"Search";
-        searchField.backgroundColor = [UIColor colorNamed:@"White"];
-        searchField.font = [UIFont systemFontOfSize:10];
-        searchField.textColor = [UIColor colorNamed:@"Medium"];
-        searchField.userInteractionEnabled = YES;
+        _searchField = [[UITextField alloc] init];
+        _searchField.placeholder = @"Search";
+        _searchField.backgroundColor = [UIColor colorNamed:@"White"];
+        _searchField.font = [UIFont systemFontOfSize:10];
+        _searchField.textColor = [UIColor colorNamed:@"Medium"];
+        _searchField.userInteractionEnabled = YES;
+        _searchField.delegate = self;
         
-        [search addSubview:searchField];
-        [search bringSubviewToFront:searchField];
+        [search addSubview:_searchField];
+        [search bringSubviewToFront:_searchField];
         
-        [searchField configureLayoutWithBlock:^(YGLayout *layout) {
+        [_searchField configureLayoutWithBlock:^(YGLayout *layout) {
             layout.isEnabled = YES;
             layout.flexGrow = 1;
         }];
@@ -108,5 +116,22 @@
     }
     return self;
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == _searchField) {
+        NSString *currentText = textField.text;
+        NSString *updatedText = [currentText stringByReplacingCharactersInRange:range withString:string];
+        
+        if(_textChangeCallback){
+            _textChangeCallback(updatedText);
+        }
+    }
+    return YES;
+}
+
+-(void) didChangeText: (void (^)(NSString *text)) callback {
+    _textChangeCallback = callback;
+}
+
 
 @end

@@ -11,6 +11,7 @@
 @property (strong, nonatomic) PHeader *pheader;
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) NSMutableArray<PokeData *> *pokemons;
+@property (strong, nonatomic) NSArray<PokeData *> *allPokemons;
 
 @end
 
@@ -30,6 +31,20 @@
 
     _pheader = [[PHeader alloc] init];
     [self.view addSubview:self.pheader];
+    [_pheader didChangeText:^(NSString *text) {
+        self.pokemons = [self.allPokemons mutableCopy];
+        
+        if([text isEqual:@""]) {
+            [self.collectionView reloadData];
+        } else {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[c] %@", text];
+            
+            NSArray *filteredArray = [self.pokemons filteredArrayUsingPredicate:predicate];
+            [self.pokemons setArray:[filteredArray mutableCopy]];
+            [self.collectionView reloadData];
+        }
+        
+    }];
 
     [self buildPokeCollectionView];
     [self fetchPokemons];
@@ -112,6 +127,7 @@
                 };
 
                 [self.pokemons sortUsingComparator:compareBlock];
+                self.allPokemons = self.pokemons;
                 [self.collectionView reloadData];
             });
         } else {
@@ -137,11 +153,9 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     PokeDetailsViewController *pokeDetailsVC = [[PokeDetailsViewController alloc] init];
     pokeDetailsVC.pokeId = [_pokemons objectAtIndex:indexPath.item].number;
     [self.navigationController pushViewController:pokeDetailsVC animated:YES];
-    
 }
 
 @end
