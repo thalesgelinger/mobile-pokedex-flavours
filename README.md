@@ -6,12 +6,13 @@ This repository contains the same pokedex design based on [poke api](https://pok
 
 
 The techs that must be used at first moment are:
- - React Native (wip)
- - Flutter
- - IOS - with Objective-C
- - IOS - with Swift
- - Android - Java
- - Android - Jetpack Compose
+ - [x] React Native (wip)
+ - [x] Flutter
+ - [ ] Xamarin
+ - [x] IOS - with Objective-C
+ - [ ] IOS - with Swift
+ - [ ] Android - Java
+ - [ ] Android - Jetpack Compose
 
 All the implementaions should follow the same [design](https://www.figma.com/file/fxFTh7OMH1eQQUdpXCeqKy/Pok%C3%A9dex-(Community)?type=design&node-id=913%3A239&t=DkXBwl6vWtQFQRiR-1).
 
@@ -20,3 +21,6 @@ The main goals for all techs are understand:
   -  feching
   -  routing
   -  basic state managiment
+  -  navigation
+  -  device storage
+  -  filtering
