@@ -41,7 +41,6 @@
         pokeballImg = [pokeballImg imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         UIImageView *pokeball = [[UIImageView alloc] initWithImage:pokeballImg];
         [pokeball setTintColor:[UIColor colorNamed:@"White"]];
-        
 
         UILabel *title = [[UILabel alloc] init];
         title.text = @"Pokedex";
