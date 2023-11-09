@@ -7,11 +7,66 @@
 
 import SwiftUI
 
+struct BasePokeData : Codable {
+    var name: String;
+    var url: String;
+}
+
+struct PokemonsData : Codable {
+    var results: [BasePokeData]
+}
+
+struct PokeData : Codable {
+    var number: Int;
+    var name: String;
+    var imgUrl: String;
+}
+
+struct Sprites: Codable {
+    var front_default: String;
+}
+
+struct PokeDetailsDataBase: Codable {
+    var id: Int;
+    var name: String;
+    var sprites: Sprites
+}
+
 struct ContentView: View {
     
     @State private var searchTerm: String = "";
+    @State private var pokemons: [PokeData] = [];
     
-    private let data = (1...20).map { "\($0)" };
+    func fetchPokemons() async {
+        guard let pokemonsUrl = URL(string:"https://pokeapi.co/api/v2/pokemon?limit=50&offset=0") else {
+           print("Error building url")
+           return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: pokemonsUrl)
+            let pokemonsData = try JSONDecoder().decode(PokemonsData.self, from: data)
+            
+            for poke in pokemonsData.results {
+                guard let url = URL(string: poke.url) else {
+                    print("Error creating url for poke details")
+                    return
+                }
+                
+                do {
+                    let (response, _) = try await URLSession.shared.data(from: url)
+                    let pokeDetails = try JSONDecoder().decode(PokeDetailsDataBase.self, from: response)
+                    let pokeData = PokeData(number: pokeDetails.id, name: pokeDetails.name, imgUrl: pokeDetails.sprites.front_default);
+                    pokemons.append(pokeData)
+                } catch {
+                    print("Error fetching details")
+                }
+            }
+        } catch {
+            print("Error fetching pokemons")
+        }
+    
+    }
     
     var body: some View {
         ZStack {
@@ -58,11 +113,16 @@ struct ContentView: View {
                 ZStack {
                     ScrollView {
                         LazyVGrid(columns: (1...3).map { _ in GridItem() }, spacing: 20){
-                            ForEach(data, id: \.self){
-                                item in PokeCard(item: item)
+                            ForEach(pokemons, id: \.number){
+                                poke in PokeCard(number: poke.number, imageUrl: poke.imgUrl, name: poke.name)
                             }
                             .padding(.top, 24)
                             .padding(.horizontal, 12)
+                        }
+                        .onAppear() {
+                            Task {
+                                await fetchPokemons()
+                            }
                         }
                     }
                 }
@@ -78,7 +138,10 @@ struct ContentView: View {
     
 }
 struct PokeCard: View {
-    var item = "";
+    var number: Int;
+    var imageUrl: String;
+    var name: String;
+    
     var body: some View {
         ZStack {
             VStack {
@@ -91,7 +154,7 @@ struct PokeCard: View {
             VStack {
                 HStack {
                     Spacer()
-                    Text("#\(item)")
+                    Text("#\(number)")
                         .font(Font.custom("Poppins", size: 12))
                         .foregroundColor(.medium)
                 }
@@ -99,7 +162,7 @@ struct PokeCard: View {
                 .padding(.top, 4)
                 
                 GeometryReader { geometry in
-                      AsyncImage(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")) { phase in
+                      AsyncImage(url: URL(string: imageUrl)) { phase in
                           switch phase {
                           case .empty:
                               ProgressView()
@@ -116,7 +179,7 @@ struct PokeCard: View {
                       }
                   }
                 
-                Text("Bulbassaur")
+                Text(name)
                     .font(Font.custom("Poppins", size: 10))
                     .foregroundColor(.darkbg)
             }
