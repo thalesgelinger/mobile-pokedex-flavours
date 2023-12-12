@@ -16,7 +16,7 @@ struct PokemonsData : Codable {
     var results: [BasePokeData]
 }
 
-struct PokeData : Codable {
+struct PokeData : Hashable {
     var number: Int;
     var name: String;
     var imgUrl: String;
@@ -36,6 +36,14 @@ struct HomeView: View {
     
     @State private var searchTerm: String = "";
     @State private var pokemons: [PokeData] = [];
+    
+    @State private var path = NavigationPath()
+    
+    private var transaction: Transaction {
+        var t = Transaction()
+        t.disablesAnimations = true
+        return t
+    }
     
     func fetchPokemons() async {
         guard let pokemonsUrl = URL(string:"https://pokeapi.co/api/v2/pokemon?limit=50&offset=0") else {
@@ -68,7 +76,7 @@ struct HomeView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack (path: $path.transaction(transaction)) {
             ZStack {
                 Color("Primary")
                     .edgesIgnoringSafeArea(.all)
@@ -88,7 +96,7 @@ struct HomeView: View {
                                 .frame(width: 24, height: 24)
                             
                             TextField("Search", text: $searchTerm)
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
                         }
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
@@ -100,8 +108,10 @@ struct HomeView: View {
                     ZStack {
                         ScrollView {
                             LazyVGrid(columns: (1...3).map { _ in GridItem() }, spacing: 20){
-                                ForEach(pokemons, id: \.number){
-                                    poke in PokeCard(number: poke.number, imageUrl: poke.imgUrl, name: poke.name)
+                                ForEach(pokemons.filter {p in p.name.hasPrefix(searchTerm.lowercased())}, id: \.number){
+                                    poke in NavigationLink (value: poke.number) {
+                                        PokeCard(number: poke.number, imageUrl: poke.imgUrl, name: poke.name)
+                                    }
                                 }
                                 .padding(.top, 24)
                                 .padding(.horizontal, 12)
@@ -121,7 +131,9 @@ struct HomeView: View {
                     .scrollIndicators(.hidden)
                 }
             }
+            .navigationDestination(for: Int.self) { pokeId in
+                DetailsView(pokeId: pokeId, path: $path)
+            }
         }
-        
     }
 }

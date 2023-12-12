@@ -66,12 +66,26 @@ struct DetailsStats: Codable {
 struct DetailsView: View {
     var pokeId: Int;
     
-    @State var pokeData: PokeDetails?
-    @State var pokeColor: Color = .black
-    @Environment(\.dismiss) var goBack: DismissAction
+    @State private var pokeData: PokeDetails?
+    @State private var pokeColor: Color = .black
+    
+    @Binding var path: NavigationPath
     
     
     func fetchPokeDetails() async -> Void {
+        
+        let defaults = UserDefaults.standard
+        
+        let savedPoke = defaults.object(forKey: String(pokeId))
+        
+        do {
+            if savedPoke != nil {
+                pokeData = try JSONDecoder().decode(PokeDetails.self, from:savedPoke as! Data )
+                pokeColor = Color(UIColor(named: pokeData!.types[0].capitalizeFirstLetter())!)
+                return
+            }
+        } catch {}
+        
         let detailsUrl = "https://pokeapi.co/api/v2/pokemon/\(pokeId)/"
         
         guard let url = URL(string: detailsUrl) else {
@@ -99,6 +113,8 @@ struct DetailsView: View {
                 types: pokeDetails.types.map { type in type.type.name},
                 stats: stats
             )
+            UserDefaults.standard.set(try JSONEncoder().encode(pokeData), forKey: String(pokeId))
+            UserDefaults.standard.synchronize()
             pokeColor = Color(UIColor(named: pokeData!.types[0].capitalizeFirstLetter())!)
             
         } catch {
@@ -129,14 +145,14 @@ struct DetailsView: View {
                         .frame(width: 200, height: 200)
                     
                     HStack {
-                        NavigationLink (destination: DetailsView(pokeId: pokeId - 1)) {
                             Image(uiImage: .chevronLeft)
                                 .resizable()
                                 .renderingMode(.template)
                                 .foregroundColor(Color("White"))
                                 .frame(width: 32, height: 32)
-                            
-                        }
+                                .onTapGesture {
+                                    path.append(pokeId-1)
+                                }
                         Spacer()
                         GeometryReader { geometry in
                             AsyncImage(url: URL(string: pokeData!.img)) { phase in
@@ -156,13 +172,14 @@ struct DetailsView: View {
                             }
                         }
                         Spacer()
-                        NavigationLink (destination: DetailsView(pokeId: pokeId + 1)) {
                             Image(uiImage: .chevronRight)
                                 .resizable()
                                 .renderingMode(.template)
                                 .foregroundColor(Color("White"))
                                 .frame(width: 32, height: 32)
-                        }
+                                .onTapGesture {
+                                    path.append(pokeId+1)
+                                }
                     }
                     .frame(height: 200)
                     .offset(x:0, y: 100)
@@ -175,7 +192,7 @@ struct DetailsView: View {
                                 .foregroundColor(Color("White"))
                                 .frame(width: 32, height: 32)
                                 .onTapGesture {
-                                    goBack()
+                                    path.removeLast(path.count)
                                 }
                             Text(pokeData!.name)
                                 .foregroundColor(.white)
@@ -355,11 +372,5 @@ struct Pill : ViewModifier {
             .foregroundColor(.white)
             .background(color)
             .cornerRadius(10)
-    }
-}
-
-struct DetailsView_Previews: PreviewProvider{
-    static var previews: some View {
-        DetailsView(pokeId: 1)
     }
 }
