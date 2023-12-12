@@ -10,7 +10,7 @@ The techs that must be used at first moment are:
  - [x] Flutter
  - [ ] Xamarin
  - [x] IOS - with Objective-C
- - [ ] IOS - with Swift
+ - [x] IOS - with Swift
  - [ ] Android - Java
  - [ ] Android - Jetpack Compose
 
