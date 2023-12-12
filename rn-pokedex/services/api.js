@@ -2,7 +2,7 @@ import { storage } from "./storage";
 
 
 export const api = {
-    async get(endpoint) {
+    async get(endpoint, opts) {
         if (await storage.has(endpoint)) {
             return await storage.get(endpoint)
         }
